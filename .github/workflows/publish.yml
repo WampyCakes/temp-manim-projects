@@ -1,0 +1,48 @@
+name: Update and Deploy
+
+on:
+  push:
+    branches: ['website']
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Website
+    runs-on: windows-latest
+    steps:
+    - uses: actions/checkout@v2
+      with:
+          persist-credentials: false
+    - name: Use Node.js 12.x
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+    - name: Build Site
+      run: |
+        npm install
+        npm run build
+    - name: Upload Artifacts 🔺
+      uses: actions/upload-artifact@v1
+      with:
+          name: dist
+          path: dist
+  deploy:
+    name: Deploy Website
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+      - name: Download Artifacts 🔻 # The built project is downloaded into the 'site' folder.
+        uses: actions/download-artifact@v1
+        with:
+          name: dist
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@releases/v3
+        with:
+            GITHUB_TOKEN : ${{ secrets.GITHUB_TOKEN }} # set TOKEN_PUSH in secrets
+            BRANCH: gh-pages
+            FOLDER: dist
+            SINGLE_COMMIT: true
