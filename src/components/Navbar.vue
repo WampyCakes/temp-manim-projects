@@ -9,44 +9,42 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="social">
-        <a href="https://github.com/WampyCakes/temp-manim-projects" class="nav-link" rel="noopener noreferrer">
-          <button type="button" class="btn btn-outline-light">
-            <strong>Upload Your Manim Video</strong>
-          </button>
-        </a>
+        <button type="button" class="btn btn-outline-light" v-on:click="captcha()">
+          <strong>Upload Your Manim Video</strong>
+        </button>
         <ul class="navbar-nav ml-auto">
           <li class="nav-item">
             <a href="https://docs.manim.community" class="nav-link" target="_blank" rel="noopener noreferrer">
               <button type="button" class="btn btn-outline-light">
-                <i class="fa">&#xf291;</i> Documentation
+                <i class="icon-book"></i> Documentation
               </button>
             </a>
           </li>
           <li class="nav-item">
             <a href="https://github.com/ManimCommunity/manim" class="nav-link" target="_blank">
               <button type="button" class="btn btn-outline-light">
-                <i class="fab fa-github"></i> GitHub
+                <i class="icon-github"></i> GitHub
               </button>
             </a>
           </li>
           <li class="nav-item">
             <a href="https://twitter.com/manim_community/" class="nav-link" target="_blank" rel="noopener noreferrer">
               <button type="button" class="btn btn-outline-light">
-                <i class="fab fa-twitter"></i> Twitter
+                <i class="icon-twitter"></i> Twitter
               </button>
             </a>
           </li>
           <li class="nav-item">
             <a href="https://discord.gg/mMRrZQW" class="nav-link" target="_blank" rel="noopener noreferrer">
               <button type="button" class="btn btn-outline-light">
-                <i class="fab fa-discord"></i> Discord
+                <i class="icon-discord"></i> Discord
               </button>
             </a>
           </li>
           <li>
             <a href="https://www.reddit.com/r/manim/" class="nav-link nav-item" target="_blank" rel="noopener noreferrer">
               <button type="button" class="btn btn-outline-light">
-                <i class="fab fa-reddit"></i> Reddit
+                <i class="icon-reddit"></i> Reddit
               </button>
             </a>
           </li>

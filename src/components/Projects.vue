@@ -1,26 +1,25 @@
 <template>
   <!-- <iframe src="https://grand-auspicious-plough.glitch.me/" frameborder="0"></iframe> -->
-  <button v-on:click="captcha()">Yeee</button>
   <div id="list" class="container-fluid">
     <div v-for="item in grid().value()" class="row flex-md-row mb-4 h-md-250 position-relative" v-bind:key="item">
       <div v-for="project in item" class="col border rounded shadow-lg p-4 d-flex flex-column position-static m-2" v-bind:key="project">
         <div class="container-fluid pl-0">
-          <strong v-for="tag in project[8]" v-bind:key="tag" style="border: 3px solid; color: #fff; border-radius: .9rem; padding: 3px; margin: 3px; float: left" 
-          v-bind:style="{background: colors[project[8].indexOf(tag)], borderColor: colors[project[8].indexOf(tag)]}">
+          <strong v-for="tag in project[9]" v-bind:key="tag" style="border: 3px solid; color: #fff; border-radius: .9rem; padding: 3px; margin: 3px; float: left" 
+          v-bind:style="{background: colors[project[9].indexOf(tag)], borderColor: colors[project[9].indexOf(tag)]}">
           {{ tag }}
           </strong>
         </div>
-        <strong class="m-3 text-wrap" style="font-size: 20px; color: #000; font-style: italic">{{ project[0] }}</strong>
-        <strong class="mb-3 text-left">By <p class="d-inline" v-if="project[1] == ''">Anonymous</p> {{ project[1] }}</strong>
+        <strong class="m-3 text-wrap" style="font-size: 20px; color: #000; font-style: italic">{{ project[1] }}</strong>
+        <strong class="mb-3 text-left">By <p class="d-inline" v-if="project[2] == ''">Anonymous</p> {{ project[2] }}</strong>
         <div class="embed-responsive embed-responsive-16by9">
-          <!-- <iframe class="embed-responsive-item" v-bind:src="project[2]" allowfullscreen></iframe> -->
+          <!-- <iframe class="embed-responsive-item" v-bind:src="project[3]" allowfullscreen></iframe> -->
         </div>
-        <p class="mb-auto py-3 ml-5 text-left">{{ project[5] }}</p>
+        <p class="mb-auto py-3 ml-5 text-left">{{ project[6] }}</p>
         <div>
-          <p tabindex="0" class="btn btn-outline-light hover-card mt-4 d-flex" style="align-items: center; background: white; color: black; float: left"
-          data-trigger="focus" data-toggle="popover" data-placement="right" title="Subfields" v-bind:data-content="[project[7].length === 0 ? 'No subfields listed' : project[7]
-          .join(', ')]">Fields: {{ project[6].join(', ') }} ❯ </p>
-          <a class="" v-if="project[3] !== ''" v-bind:href="project[3]">
+          <p class="btn btn-outline-light hover-card mt-4 d-flex" style="align-items: center; background: white; color: black; float: left"
+          data-trigger="focus" data-toggle="popover" data-placement="right" title="Subfields" v-bind:data-content="[project[8].length === 0 ? 'No subfields listed' : project[8]
+          .join(', ')]">Fields: {{ project[7].join(', ') }} ❯ </p>
+          <a class="" v-if="project[4] !== ''" v-bind:href="project[4]">
             <button type="button" class="btn btn-outline-light hover-card mt-3" style="background: white; color: black; float: right">
               Video source code available on GitHub <img height="45" width="45" draggable="false" src="../assets/github-logo.svg">
             </button>
@@ -65,7 +64,7 @@ export default {
     //     this.data.push(reader.read().json())
     //   }
     // });
-    fetch('output2.json')
+    fetch('output3.json')
       .then(response => response.json())
       .then(json => {
         this.data = Lazy(json).take(this.perPage)
@@ -102,8 +101,6 @@ export default {
   //   // observer.observe($('#list').last());
   // },
   updated() {
-    // if(this.currentPage == 1)
-    //   document.getElementById(1).classList.add('activePageNumber')
     $('[data-toggle="popover"]').popover({trigger:'hover'})
   },
   data() {
