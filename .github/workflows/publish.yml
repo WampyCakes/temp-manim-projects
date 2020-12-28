@@ -2,7 +2,7 @@ name: Update and Deploy
 
 on:
   push:
-    branches: ['website']
+    branches: ['main']
   workflow_dispatch:
 
 jobs:
