@@ -81,12 +81,12 @@ export default {
       title: "Upload Your Manim Video",
       text: "Use the slider to orient the picture upright",
       album: [
-        "tiger.jpg",
-        "eagle.jpg",
-        "gosling.jpg",
-        "kitten.jpg",
-        "wolf.jpg",
-        "bird.jpg",
+        "https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/tiger.jpg",
+        "https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/eagle.jpg",
+        "https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/gosling.jpg",
+        "https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/kitten.jpg",
+        "https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/wolf.jpg",
+        "https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/bird.jpg",
       ]
     });
   },

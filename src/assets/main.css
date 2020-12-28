@@ -10,11 +10,11 @@ body {
 
 @font-face {
   font-family: 'icomoon';
-  src:  url('../../cdn/fonts/icomoon.eot?l6smau');
-  src:  url('../../cdn/fonts/icomoon.eot?l6smau#iefix') format('embedded-opentype'),
-    url('../../cdn/fonts/icomoon.ttf?l6smau') format('truetype'),
-    url('../../cdn/fonts/icomoon.woff?l6smau') format('woff'),
-    url('../../cdn/fonts/icomoon.svg?l6smau#icomoon') format('svg');
+  src:  url('https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/fonts/icomoon.eot?l6smau');
+  src:  url('https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/fonts/icomoon.eot?l6smau#iefix') format('embedded-opentype'),
+    url('https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/fonts/icomoon.ttf?l6smau') format('truetype'),
+    url('https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/fonts/icomoon.woff?l6smau') format('woff'),
+    url('https://cdn.jsdelivr.net/gh/WampyCakes/temp-manim-projects/cdn/fonts/icomoon.svg?l6smau#icomoon') format('svg');
   font-weight: normal;
   font-style: normal;
   font-display: block;
