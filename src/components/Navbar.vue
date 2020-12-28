@@ -9,7 +9,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="social">
-        <a href="https://github.com/WampyCakes/manim-projects" class="nav-link" rel="noopener noreferrer">
+        <a href="https://github.com/WampyCakes/temp-manim-projects" class="nav-link" rel="noopener noreferrer">
           <button type="button" class="btn btn-outline-light">
             <strong>Upload Your Manim Video</strong>
           </button>

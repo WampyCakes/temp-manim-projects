@@ -1,5 +1,5 @@
 module.exports = {
-    publicPath: '/manim-projects/'
+    publicPath: '/temp-manim-projects/'
     // module: {
     //     rules: [
     //       {
