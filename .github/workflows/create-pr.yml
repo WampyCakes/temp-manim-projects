@@ -14,6 +14,6 @@ jobs:
           echo ${{ github.event.client_payload }} > submission.json
           # git config user.name github-actions
           # git config user.email github-actions@github.com
-          git add submissions.json
+          git add submission.json
           git commit
           gh pr create --title "${{ github.event.client_payload.title }}" --body "PR Body"
