@@ -12,8 +12,8 @@ jobs:
       - run: |
           brew install gh
           echo ${{ github.event.client_payload }} > submission.json
-          # git config user.name github-actions
-          # git config user.email github-actions@github.com
+          git config user.name github-actions
+          git config user.email github-actions@github.com
           git add submission.json
           git commit
           gh pr create --title "${{ github.event.client_payload.title }}" --body "PR Body"
