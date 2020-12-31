@@ -15,5 +15,5 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add submission.json
-          git commit
+          git commit -m "Message"
           gh pr create --title "${{ github.event.client_payload.title }}" --body "PR Body"
