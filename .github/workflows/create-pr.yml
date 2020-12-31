@@ -1,0 +1,19 @@
+name: Create Submission PR
+
+on:
+  repository_dispatch:
+    types: [new-submission]
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
+          brew install gh
+          echo ${{ github.event.client_payload }} > submission.json
+          # git config user.name github-actions
+          # git config user.email github-actions@github.com
+          git add submissions.json
+          git commit
+          gh pr create --title "${{ github.event.client_payload.title }}" --body "PR Body"
