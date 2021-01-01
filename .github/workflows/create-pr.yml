@@ -13,7 +13,18 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: 'node ./.github/scripts/create.js DATA="${{ toJson(github.event.client_payload) }}"'
+      - run: |
+          DATE=${{ github.event.client_payload.date }}
+          TITLE=${{ github.event.client_payload.title }}
+          AUTHOR=${{ github.event.client_payload.author }}
+          CREDIT=${{ github.event.client_payload.credit }}
+          VIDEO_URL=${{ github.event.client_payload.video_url }}
+          DESCRIPTION=${{ github.event.client_payload.description }}
+          SOURCE=${{ github.event.client_payload.source }}
+          FIELDS=${{ github.event.client_payload.fields }}
+          SUBFIELDS=${{ github.event.client_payload.subfields }}
+          TAGS=${{ github.event.client_payload.TAGS }}
+          'node ./.github/scripts/create.js DATE TITLE AUTHOR CREDIT VIDEO_URL DESCRIPTION SOURCE FIELDS SUBFIELDS TAGS
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
