@@ -12,4 +12,4 @@ data = {
     "subfields": args[8],
     "tags": args[9],
 }
-fs.writeFileSync('submission.json', JSON.stringify(data, null, "\t"))
+fs.writeFileSync('./submissions/'+data.author+' - '+data.title.substring(0, 25)+'.json', JSON.stringify(data))
