@@ -14,7 +14,8 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          node ./.github/scripts/create.js DATA=${{ github.event.client_payload }}
+          json=(${{ github.event.client_payload }} | jq .)
+          node ./.github/scripts/create.js DATA=$json
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
