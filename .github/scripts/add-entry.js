@@ -1,6 +1,6 @@
 var fs = require('fs')
-var submissions = require('submissions.json')
-var newSubmission = require('submissions/'+process.argv[2]+'.json')
+var submissions = JSON.parse(fs.readFileSync('submissions.json'))
+var newSubmission = JSON.parse(fs.readFileSync('submissions/'+process.argv[2]+'.json'))
 
 submissions.push(newSubmission)
 
@@ -14,4 +14,4 @@ submissions.sort(date_sort)
 Object.keys(submissions).forEach((key) => {
     submissions[key] = Object.values(submissions[key]) 
 })
-fs.writeFileSync('../../submissions.json', JSON.stringify(submissions))
+fs.writeFileSync('submissions.json', JSON.stringify(submissions))
