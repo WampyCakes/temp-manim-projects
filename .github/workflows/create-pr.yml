@@ -24,7 +24,7 @@ jobs:
           FIELDS='${{ github.event.client_payload.fields }}'
           SUBFIELDS='${{ github.event.client_payload.subfields }}'
           TAGS='${{ github.event.client_payload.TAGS }}'
-          node ./.github/scripts/create.js DATE TITLE AUTHOR CREDIT VIDEO_URL DESCRIPTION SOURCE FIELDS SUBFIELDS TAGS
+          node ./.github/scripts/create.js $DATE $TITLE $AUTHOR $CREDIT $VIDEO_URL $DESCRIPTION $SOURCE $FIELDS $SUBFIELDS $TAGS
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
