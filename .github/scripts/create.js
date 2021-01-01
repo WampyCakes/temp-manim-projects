@@ -1,2 +1,3 @@
-var fs = require('fs')
-fs.writeFileSync('submission.json', JSON.stringify(process.env.DATA))
+var fs = require('fs');
+console.log(process.env.DATA);
+fs.writeFileSync('submission.json', process.env.DATA);
