@@ -1,4 +1,4 @@
-name: Create Submission PR
+name: Create Submission
 
 on:
   repository_dispatch:
@@ -25,7 +25,8 @@ jobs:
           SUBFIELDS='${{ github.event.client_payload.subfields }}'
           TAGS='${{ github.event.client_payload.TAGS }}'
           node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          title: ${{ github.event.client_payload.title }}
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./submissions/"$AUTHOR" - ${"$TITLE":0:25}.json
+          git commit -m "Automatically added a video submission"
+          git push origin main
