@@ -13,4 +13,8 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - run: 'echo "payload: ${{ toJson(github.event.client_payload) }}"'
+      - run: 'node ./.github/scripts/create.js DATA=${{ toJson(github.event.client_payload) }}'
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          title: ${{ github.event.client_payload.title }}
