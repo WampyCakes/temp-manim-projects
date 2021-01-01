@@ -1,6 +1,6 @@
 var fs = require('fs')
-var submissions = require('../../submissions.json')
-var newSubmission = require('../../submissions/'+process.argv[2]+'.json')
+var submissions = require('submissions.json')
+var newSubmission = require('submissions/'+process.argv[2]+'.json')
 
 submissions.push(newSubmission)
 
