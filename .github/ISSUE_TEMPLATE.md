@@ -1,4 +1,4 @@
 ---
-title: "{{ AUTHOR }} - {{ TITLE }}"
+title: "{{ env.AUTHOR }} - {{ env.TITLE }}"
 ---
-{{ VIDEO_URL }}
+{{ env.VIDEO_URL }}
