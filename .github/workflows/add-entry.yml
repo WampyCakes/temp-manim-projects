@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          echo ${{ github.event.label.name }}
+          echo ${{ github.event }}
