@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          ${{ github.event.client_payload }} | jq .
+          echo (${{ github.event.client_payload }} | jq .)
