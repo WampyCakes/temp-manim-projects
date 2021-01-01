@@ -1,9 +1,9 @@
 var fs = require('fs')
-var submissions = require('./submissions.json')
-var submission = require('./submissions/'+process.argv[2]+'.json')
+// var submissions = require('./submissions.json')
+// var submission = require('./submissions/'+process.argv[2]+'.json')
+var submissions = JSON.parse(fs.readFileSync('submissions.json'))
+var submission = JSON.parse(fs.readFileSync('submissions/'+process.argv[2]+'.json'))
 var newSubmission = []
-// var submissions = JSON.parse(fs.readFileSync('submissions.json'))
-// var newSubmission = JSON.parse(fs.readFileSync('submissions/'+process.argv[2]+'.json'))
 
 Object.values(submission).forEach((value) => {
     newSubmission.push(value)
