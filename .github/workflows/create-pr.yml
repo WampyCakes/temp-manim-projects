@@ -27,6 +27,6 @@ jobs:
           node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add ./submissions/"$AUTHOR" - ${"$TITLE":0:25}.json
+          git add ./submissions/"$AUTHOR" - ${"$TITLE":0:25} .json
           git commit -m "Automatically added a video submission"
           git push origin main
