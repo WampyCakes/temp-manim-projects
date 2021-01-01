@@ -14,16 +14,16 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          echo DATE='${{ github.event.client_payload.date }}'
-          echo TITLE='${{ github.event.client_payload.title }}'
-          echo AUTHOR='${{ github.event.client_payload.author }}'
-          echo CREDIT='${{ github.event.client_payload.credit }}'
-          echo VIDEO_URL='${{ github.event.client_payload.video_url }}'
-          echo DESCRIPTION='${{ github.event.client_payload.description }}'
-          echo SOURCE='${{ github.event.client_payload.source }}'
-          echo FIELDS='${{ github.event.client_payload.fields }}'
-          echo SUBFIELDS='${{ github.event.client_payload.subfields }}'
-          echo TAGS='${{ github.event.client_payload.TAGS }}'
+          DATE='${{ github.event.client_payload.date }}'
+          TITLE='${{ github.event.client_payload.title }}'
+          AUTHOR='${{ github.event.client_payload.author }}'
+          CREDIT='${{ github.event.client_payload.credit }}'
+          VIDEO_URL='${{ github.event.client_payload.video_url }}'
+          DESCRIPTION='${{ github.event.client_payload.description }}'
+          SOURCE='${{ github.event.client_payload.source }}'
+          FIELDS='${{ github.event.client_payload.fields }}'
+          SUBFIELDS='${{ github.event.client_payload.subfields }}'
+          TAGS='${{ github.event.client_payload.TAGS }}'
           node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
