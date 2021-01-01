@@ -5,7 +5,8 @@ on:
     types: [closed]
 
 jobs:
-  update:
+  add:
+    if: github.event.issue.labels[0] == 'submission'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -14,4 +15,9 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          echo ${{ toJson(github.event) }}
+          node ./.github/scripts/add-entry.js "${{ github.event.issue.title }}"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add submissions.json
+          git commit -m "Automatically added an entry to submissions.json"
+          git push origin main
