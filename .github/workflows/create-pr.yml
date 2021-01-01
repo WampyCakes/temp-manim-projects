@@ -10,6 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
+          echo '${{ github.event.client_payload }}'
           echo '${{ github.event.client_payload }}' > submission.json
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
