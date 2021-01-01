@@ -15,8 +15,7 @@ jobs:
           node-version: 12.x
       - run: |
           node
-          var fs = require('fs')
-          fs.writeFileSync('te.json', JSON.stringify(${{ github.event.client_payload }})
+          console.log('test');
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
