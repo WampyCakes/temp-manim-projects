@@ -10,10 +10,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          # brew install gh
           echo ${{ github.event.client_payload }} > submission.json
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add submission.json
           git commit -m "Message"
-          hub pull-request -m "${{ github.event.client_payload.title }}"
+      - run: hub pull-request -m "${{ github.event.client_payload.title }}"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
