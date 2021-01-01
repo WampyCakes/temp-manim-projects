@@ -10,9 +10,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: |
-          sudo apt-get install jq
           jq --help
-          jq '${{ github.event.client_payload.title }}' > submission.json
+          jq '${{ github.event.client_payload }}' > submission.json
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
