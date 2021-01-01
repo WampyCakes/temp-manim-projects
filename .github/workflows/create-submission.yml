@@ -30,9 +30,4 @@ jobs:
           git add ./submissions/"$AUTHOR - $TITLE.json"
           git commit -m "Automatically added a video submission"
           git push origin main
-      - uses: JasonEtco/create-an-issue@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          TITLE: "$TITLE"
-          AUTHOR: "$AUTHOR"
-          VIDEO_URL: "$VIDEO_URL" 
+
