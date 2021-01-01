@@ -13,8 +13,8 @@ jobs:
         uses: jsdaniell/create-json@1.1.2
         with:
           name: "submission.json"
-          json: ${{ github.event.client_payload }}
+          json: ${{ github.event.client_payload.data }}
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
         with:
-          title: ${{ github.event.client_payload.title }}
+          title: ${{ github.event.client_payload.data.title }}
