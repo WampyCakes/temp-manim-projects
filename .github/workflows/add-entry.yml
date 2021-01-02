@@ -6,6 +6,7 @@ on:
 
 jobs:
   add:
+    if: contains(github.event.issue.labels.*.name, 'submission')
 #     if: github.event.issue.labels[0] == 'submission'
     runs-on: ubuntu-latest
     steps:
