@@ -16,8 +16,9 @@ jobs:
           node-version: 12.x
       - run: |
           node ./.github/scripts/add-entry.js "${{ github.event.issue.title }}"
+          rm -f submissions/"${{ github.event.issue.title }}".json
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add submissions.json
+          git add .
           git commit -m "Automatically added an entry to submissions.json"
           git push origin main
