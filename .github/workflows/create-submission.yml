@@ -14,7 +14,7 @@ env:
     FIELDS: '${{ github.event.client_payload.fields }}'
     SUBFIELDS: '${{ github.event.client_payload.subfields }}'
     TAGS: '${{ github.event.client_payload.TAGS }}'
-    JSON: '{\n    "date": $DATE,\n    "title": $TITLE,\n    "author": $AUTHOR,\n    "credit": $CREDIT,\n    "video_url": $VIDEO_URL,\n    t}'
+    JSON: '{\n    "date": $DATE,\n    t}'
 
 jobs:
   update:
