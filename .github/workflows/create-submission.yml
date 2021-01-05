@@ -5,16 +5,16 @@ on:
     types: [new-submission]
 env:
 #   DATA: $(echo ${{ github.event.client_payload }} | jq '.')
-    DATE='${{ github.event.client_payload.date }}'
-    TITLE='${{ github.event.client_payload.title }}'
-    AUTHOR='${{ github.event.client_payload.author }}'
-    CREDIT='${{ github.event.client_payload.credit }}'
-    VIDEO_URL='${{ github.event.client_payload.video_url }}'
-    DESCRIPTION='${{ github.event.client_payload.description }}'
-    SOURCE='${{ github.event.client_payload.source }}'
-    FIELDS='${{ github.event.client_payload.fields }}'
-    SUBFIELDS='${{ github.event.client_payload.subfields }}'
-    TAGS='${{ github.event.client_payload.TAGS }}'
+    DATE: '${{ github.event.client_payload.date }}'
+    TITLE: '${{ github.event.client_payload.title }}'
+    AUTHOR: '${{ github.event.client_payload.author }}'
+    CREDIT: '${{ github.event.client_payload.credit }}'
+    VIDEO_URL: '${{ github.event.client_payload.video_url }}'
+    DESCRIPTION: '${{ github.event.client_payload.description }}'
+    SOURCE: '${{ github.event.client_payload.source }}'
+    FIELDS: '${{ github.event.client_payload.fields }}'
+    SUBFIELDS: '${{ github.event.client_payload.subfields }}'
+    TAGS: '${{ github.event.client_payload.TAGS }}'
 
 jobs:
   update:
