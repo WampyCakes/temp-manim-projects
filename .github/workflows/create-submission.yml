@@ -43,7 +43,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ env.AUTHOR }} - ${{ env.TITLE }}"
-          body: "<code>${{ env.JSON }}</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
+          body: "<code>'${{ env.JSON }}'</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
