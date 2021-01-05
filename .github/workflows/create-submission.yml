@@ -14,7 +14,6 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          DATA = ${{ github.event.client_payload }} | jq '.'
           DATE='${{ github.event.client_payload.date }}'
           TITLE='${{ github.event.client_payload.title }}'
           AUTHOR='${{ github.event.client_payload.author }}'
@@ -31,7 +30,7 @@ jobs:
           git add ./submissions/"$AUTHOR - $TITLE.json"
           git commit -m "Automatically added a video submission"
           git push origin main
-          echo "JSON=$DATA" >> $GITHUB_ENV
+          echo "DATA=$(echo ${{ github.event.client_payload }} | jq '.')" >> $GITHUB_ENV
       - uses: octokit/request-action@v2.x
         id: get_url
         with:
@@ -43,7 +42,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}"
-          body: $JSON
+          body: $DATA
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
