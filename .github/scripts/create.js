@@ -14,3 +14,5 @@ data = {
 }
 fs.writeFileSync('./submissions/'+data.author+' - '+data.title+'.json', JSON.stringify(data, null, "\t"))
 console.log(args[10])
+console.log(JSON.stringify(args[10], null, "\t"))
+console.log(JSON.stringify(JSON.parse(args[10]), null, "\t"))
