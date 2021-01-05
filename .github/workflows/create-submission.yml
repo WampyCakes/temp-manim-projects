@@ -36,8 +36,7 @@ jobs:
           id: get_url
           owner: WampyCakes
           repo: temp-manim-projects
-          path: 'submissions/${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}'
-          head_sha: ${{ github.sha }}
+          path: 'submissions/"${{ github.event.client_payload.author }}" - "${{ github.event.client_payload.title }}"'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: octokit/request-action@v2.x
