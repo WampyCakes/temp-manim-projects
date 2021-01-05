@@ -9,27 +9,29 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-#       - name: Use Node.js 12.x
-#         uses: actions/setup-node@v1
-#         with:
-#           node-version: 12.x
-#       - run: |
-#           DATE='${{ github.event.client_payload.date }}'
-#           TITLE='${{ github.event.client_payload.title }}'
-#           AUTHOR='${{ github.event.client_payload.author }}'
-#           CREDIT='${{ github.event.client_payload.credit }}'
-#           VIDEO_URL='${{ github.event.client_payload.video_url }}'
-#           DESCRIPTION='${{ github.event.client_payload.description }}'
-#           SOURCE='${{ github.event.client_payload.source }}'
-#           FIELDS='${{ github.event.client_payload.fields }}'
-#           SUBFIELDS='${{ github.event.client_payload.subfields }}'
-#           TAGS='${{ github.event.client_payload.TAGS }}'
-#           node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
-#           git config user.name github-actions
-#           git config user.email github-actions@github.com
-#           git add ./submissions/"$AUTHOR - $TITLE.json"
-#           git commit -m "Automatically added a video submission"
-#           git push origin main
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: |
+          DATA = ${{ github.event.client_payload }} | jq '.'
+          DATE='${{ github.event.client_payload.date }}'
+          TITLE='${{ github.event.client_payload.title }}'
+          AUTHOR='${{ github.event.client_payload.author }}'
+          CREDIT='${{ github.event.client_payload.credit }}'
+          VIDEO_URL='${{ github.event.client_payload.video_url }}'
+          DESCRIPTION='${{ github.event.client_payload.description }}'
+          SOURCE='${{ github.event.client_payload.source }}'
+          FIELDS='${{ github.event.client_payload.fields }}'
+          SUBFIELDS='${{ github.event.client_payload.subfields }}'
+          TAGS='${{ github.event.client_payload.TAGS }}'
+          node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add ./submissions/"$AUTHOR - $TITLE.json"
+          git commit -m "Automatically added a video submission"
+          git push origin main
+          echo "::set-env name=DATA::$DATA"
       - uses: octokit/request-action@v2.x
         id: get_url
         with:
@@ -41,7 +43,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}"
-          body: "<code>${{ fromJson(github.event.client_payload) }}</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
+          body: "<code>$DATA</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
