@@ -13,3 +13,4 @@ data = {
     "tags": args[9],
 }
 fs.writeFileSync('./submissions/'+data.author+' - '+data.title+'.json', JSON.stringify(data, null, "\t"))
+console.log(args[10])
