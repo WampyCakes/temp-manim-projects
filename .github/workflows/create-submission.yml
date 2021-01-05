@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          DATA = $(echo ${{ github.event.client_payload }} | jq '.')
+          # DATA = $(echo ${{ github.event.client_payload }} | jq '.')
           DATE='${{ github.event.client_payload.date }}'
           TITLE='${{ github.event.client_payload.title }}'
           AUTHOR='${{ github.event.client_payload.author }}'
