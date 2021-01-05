@@ -3,12 +3,14 @@ name: Create Submission
 on:
   repository_dispatch:
     types: [new-submission]
+env:
+  DATA: $(echo ${{ github.event.client_payload }} | jq '.')
 
 jobs:
   update:
     runs-on: ubuntu-latest
-    env: 
-      DATA: $(echo ${{ github.event.client_payload }} | jq '.')
+#     env: 
+#       DATA: $(echo ${{ github.event.client_payload }} | jq '.')
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12.x
@@ -48,7 +50,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}"
-          body: ${{ jobs.update.env.DATA }}
+          body: ${{ env.DATA }}
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
