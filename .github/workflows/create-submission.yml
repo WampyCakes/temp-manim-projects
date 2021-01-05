@@ -31,13 +31,22 @@ jobs:
           git commit -m "Automatically added a video submission"
           git push origin main
       - uses: octokit/request-action@v2.x
-        id: create_check_run
+        with:
+          route: GET /repos/{owner}/{repo}/contents/{path}
+          id: get_url
+          owner: WampyCakes
+          repo: temp-manim-projects
+          path: 'submissions/${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}'
+          head_sha: ${{ github.sha }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/{owner}/{repo}/issues
           owner: WampyCakes
           repo: temp-manim-projects
           title: "${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}"
-          body: "${{ github.event.client_payload.video_url }}"
+          body: "${{ fromJson(steps.get_url.outputs.data).html_url }}"
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
