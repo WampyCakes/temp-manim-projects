@@ -31,7 +31,7 @@ jobs:
           git add ./submissions/"$AUTHOR - $TITLE.json"
           git commit -m "Automatically added a video submission"
           git push origin main
-          echo "DATA=$DATA" >> $GITHUB_ENV
+          echo "JSON=$DATA" >> $GITHUB_ENV
       - uses: octokit/request-action@v2.x
         id: get_url
         with:
@@ -43,7 +43,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}"
-          body: "<code>$DATA</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
+          body: "<code>${{ $JSON }}</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
