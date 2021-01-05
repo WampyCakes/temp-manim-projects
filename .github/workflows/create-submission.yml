@@ -7,8 +7,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-#     env: 
-#       DATA: ${{ github.event.client_payload }} | jq '.'
+    env: 
+      DATA: $(echo ${{ github.event.client_payload }} | jq '.')
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12.x
@@ -33,8 +33,8 @@ jobs:
           git add ./submissions/"$AUTHOR - $TITLE.json"
           git commit -m "Automatically added a video submission"
           git push origin main
-          echo "DATA=${{ github.event.client_payload }}" >> $GITHUB_ENV
-          echo $DATA
+          # echo "DATA=${{ github.event.client_payload }}" >> $GITHUB_ENV
+          # echo $DATA
         # env:
           # DATA: $DATA
       - uses: octokit/request-action@v2.x
@@ -48,7 +48,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ github.event.client_payload.author }} - ${{ github.event.client_payload.title }}"
-          body: ${{ env.DATA }}
+          body: ${{ jobs.update.env.DATA }}
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
