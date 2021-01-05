@@ -33,7 +33,8 @@ jobs:
           git add ./submissions/"$AUTHOR - $TITLE.json"
           git commit -m "Automatically added a video submission"
           git push origin main
-          echo "DATA=$(echo ${{ github.event.client_payload }} | jq '.')" >> $GITHUB_ENV
+          echo "DATA=${{ github.event.client_payload }}" >> $GITHUB_ENV
+          echo ${{ env.DATA }}
         # env:
           # DATA: $DATA
       - uses: octokit/request-action@v2.x
