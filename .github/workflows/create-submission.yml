@@ -42,8 +42,8 @@ jobs:
       - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/issues
-          title: "$AUTHOR - $TITLE"
-          body: "<code>$JSON</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
+          title: "${{ env.AUTHOR }} - ${{ env.TITLE }}"
+          body: "<code>${{ env.JSON }}</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
