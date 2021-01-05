@@ -7,8 +7,8 @@ on:
 jobs:
   update:
     runs-on: ubuntu-latest
-    env: 
-      DATA: ${{ github.event.client_payload }} | jq '.'
+#     env: 
+#       DATA: ${{ github.event.client_payload }} | jq '.'
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js 12.x
@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 12.x
       - run: |
+          DATA = $(echo ${{ github.event.client_payload }} | jq '.')
           DATE='${{ github.event.client_payload.date }}'
           TITLE='${{ github.event.client_payload.title }}'
           AUTHOR='${{ github.event.client_payload.author }}'
@@ -33,6 +34,8 @@ jobs:
           git commit -m "Automatically added a video submission"
           git push origin main
           # echo "DATA=$(echo ${{ github.event.client_payload }} | jq '.')" >> $GITHUB_ENV
+        env:
+          DATA: $DATA
       - uses: octokit/request-action@v2.x
         id: get_url
         with:
