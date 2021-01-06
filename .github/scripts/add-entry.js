@@ -6,7 +6,7 @@ var fs = require('fs')
 // This works locally, but not on GitHub. Why??
 // var submissions = require('./submissions.json')
 var submissions = JSON.parse(fs.readFileSync('submissions.json'))
-var submission = get_data(args[2], args[3])
+var submission = get_data(process.argv[2], process.argv[3])
 var newSubmission = []
 
 // Because we keep the key:value pairs in the same order throughout the whole process,
