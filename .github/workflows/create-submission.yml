@@ -45,8 +45,11 @@ jobs:
           title: "${{ github.event.client_payload.title }}"
           body: |
             '```json
+            
             ${{ github.event.client_payload.string }}
-            ``` 
+            
+            ```
+             
             [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})'
           labels: "['submission']"
           head_sha: ${{ github.sha }}
