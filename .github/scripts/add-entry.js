@@ -21,9 +21,12 @@ async function run() {
         // testing has shown this will reduce the size of the submissions.json file by roughly 90%.
         // Very important so that we a) can fit roughly twice as many submissions before hitting the
         // GitHub file size limit and b) reduce loading time of the website.
-        Object.values(submission).forEach((value) => {
-            newSubmission.push(value)
+        Object.keys(submission).forEach((key) => {
+          submission[key] = Object.values(submission[key]) 
         })
+//         Object.values(submission).forEach((value) => {
+//             newSubmission.push(value)
+//         })
 
         submissions.push(newSubmission)
 
