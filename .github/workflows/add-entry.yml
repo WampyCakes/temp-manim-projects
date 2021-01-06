@@ -16,8 +16,8 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          node ./.github/scripts/add-entry.js "${{ github.event.issue.title }}"
-          rm -f submissions/"${{ github.event.issue.title }}".json
+          node ./.github/scripts/add-entry.js "${{ github.event.issue.issue_number }}" "${{ github.repository }}"
+          # rm -f submissions/"${{ github.event.issue.title }}".json
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add .
