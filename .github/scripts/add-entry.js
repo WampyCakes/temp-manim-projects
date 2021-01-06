@@ -35,10 +35,9 @@ submissions.sort(date_sort)
 
 fs.writeFileSync('submissions.json', JSON.stringify(submissions))
 
-async function get_data(number, repo) {
-    await request(`GET /repos/${repo}/issues/{issue_number}`, {
-        issue_number: number
-    }).then(response => {
+async function get_data(repo, number) {
+    await request(`GET /repos/${repo}/issues/${number}`)
+    .then(response => {
         return JSON.parse(response.data.body.split('yaml\n')[1].split('```')[0]);
     }).catch((error) => {
         console.log(error);
