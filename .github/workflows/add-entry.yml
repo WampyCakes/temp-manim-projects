@@ -22,6 +22,6 @@ jobs:
           # rm -f submissions/"${{ github.event.issue.title }}".json
           git config user.name github-actions
           git config user.email github-actions@github.com
-          # git add "node_modules"
+          git add -A
           git commit -m "Automatically added an entry to submissions.json"
           git push origin main
