@@ -6,7 +6,7 @@ var fs = require('fs')
 // This works locally, but not on GitHub. Why??
 // var submissions = require('./submissions.json')
 var submissions = JSON.parse(fs.readFileSync('submissions.json'))
-var submission = await get_data(process.argv[2], process.argv[3])
+var submission = get_data(process.argv[2], process.argv[3])
 var newSubmission = []
 console.log(JSON.stringify(submission))
 // Because we keep the key:value pairs in the same order throughout the whole process,
@@ -35,9 +35,9 @@ submissions.sort(date_sort)
 
 // fs.writeFileSync('submissions.json', JSON.stringify(submissions))
 
-async function get_data(number, repository) {
+function get_data(number, repository) {
     console.log('repo: '+repository);
-    await request('GET /repos/{owner}/{repo}/issues/{issue_number}', {
+    request('GET /repos/{owner}/{repo}/issues/{issue_number}', {
         owner: repository.split('/')[0],
         repo: repository.split('/')[1],
         issue_number: number
