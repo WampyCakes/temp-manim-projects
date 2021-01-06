@@ -13,7 +13,7 @@ async function run() {
         issue_number: process.argv[2]
     }).then(response => {
         var submissions = JSON.parse(fs.readFileSync('submissions.json'))
-        var submission = response.data.body.split('yaml\n')[1].split('```')[0];
+        var submission = JSON.parse(response.data.body.split('yaml\n')[1].split('```')[0]);
         var newSubmission = []
         console.log(JSON.stringify(submission))
         // Because we keep the key:value pairs in the same order throughout the whole process,
@@ -21,12 +21,12 @@ async function run() {
         // testing has shown this will reduce the size of the submissions.json file by roughly 90%.
         // Very important so that we a) can fit roughly twice as many submissions before hitting the
         // GitHub file size limit and b) reduce loading time of the website.
-        Object.keys(submission).forEach((key) => {
-          submission[key] = Object.values(submission[key]) 
-        })
-//         Object.values(submission).forEach((value) => {
-//             newSubmission.push(value)
+//         Object.keys(submission).forEach((key) => {
+//           submission[key] = Object.values(submission[key]) 
 //         })
+        Object.values(submission).forEach((value) => {
+            newSubmission.push(value)
+        })
 
         submissions.push(newSubmission)
 
