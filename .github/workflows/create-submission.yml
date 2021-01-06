@@ -36,14 +36,14 @@ jobs:
         id: get_url
         with:
           route: GET /repos/${{ github.repository }}/contents/{path}
-          path: 'submissions/${{ env.AUTHOR }} - ${{ env.TITLE }}.json'
+          path: 'submissions/${{ github.event.client_payload.title }}.json'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/issues
-          title: Test # "${{ env.AUTHOR }} - ${{ env.TITLE }}"
-          body: > 
+          title: "${{ github.event.client_payload.title }}"
+          body: |
             '<code>${{ github.event.client_payload.string }}</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})'
           labels: "['submission']"
           head_sha: ${{ github.sha }}
