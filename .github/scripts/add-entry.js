@@ -8,7 +8,7 @@ var fs = require('fs')
 var submissions = JSON.parse(fs.readFileSync('submissions.json'))
 var submission = get_data(process.argv[2], process.argv[3])
 var newSubmission = []
-
+console.log('args '+process.argv)
 // Because we keep the key:value pairs in the same order throughout the whole process,
 // we can remove the keys. Between this and stringifying without extra whitespace, my
 // testing has shown this will reduce the size of the submissions.json file by roughly 90%.
