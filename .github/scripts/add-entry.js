@@ -37,8 +37,9 @@ fs.writeFileSync('submissions.json', JSON.stringify(submissions))
 
 async function get_data(number, repository) {
     console.log('repo: '+repository);
-    await request('GET /repos/{repo}/issues/{issue_number}', {
-        repo: repository,
+    await request('GET /repos/{owner}/{repo}/issues/{issue_number}', {
+        owner: repository.split('/')[0],
+        repo: repository.split('/')[1],
         issue_number: number
     }).then(response => {
         return JSON.parse(response.data.body.split('yaml\n')[1].split('```')[0]);
