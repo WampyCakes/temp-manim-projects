@@ -42,7 +42,7 @@ jobs:
       - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/issues
-          title: "${{ env.AUTHOR }} - ${{ env.TITLE }}"
+          title: Test # "${{ env.AUTHOR }} - ${{ env.TITLE }}"
           body: > 
             '<code>${{ github.event.client_payload.string }}</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})'
           labels: "['submission']"
