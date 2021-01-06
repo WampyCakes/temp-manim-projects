@@ -44,7 +44,7 @@ jobs:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ github.event.client_payload.title }}"
           body: |
-            '```javascript
+            '```yaml
             
             ${{ github.event.client_payload.string }}
             
