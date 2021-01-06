@@ -20,25 +20,25 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js 12.x
-        uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-      - run: |
-          node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add ./submissions/"$AUTHOR - $TITLE.json"
-          git commit -m "Automatically added a video submission"
-          git push origin main
-      - uses: octokit/request-action@v2.x
-        id: get_url
-        with:
-          route: GET /repos/${{ github.repository }}/contents/{path}
-          path: 'submissions/ - Grant Sanderson - All possible pythagorean triples, visualized.json'
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - uses: actions/checkout@v2
+#       - name: Use Node.js 12.x
+#         uses: actions/setup-node@v1
+#         with:
+#           node-version: 12.x
+#       - run: |
+#           node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
+#           git config user.name github-actions
+#           git config user.email github-actions@github.com
+#           git add ./submissions/"$AUTHOR - $TITLE.json"
+#           git commit -m "Automatically added a video submission"
+#           git push origin main
+#       - uses: octokit/request-action@v2.x
+#         id: get_url
+#         with:
+#           route: GET /repos/${{ github.repository }}/contents/{path}
+#           path: 'submissions/ - Grant Sanderson - All possible pythagorean triples, visualized.json'
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: octokit/request-action@v2.x
         with:
           route: POST /repos/${{ github.repository }}/issues
