@@ -26,7 +26,7 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS" "${{ github.event.client_payload.string }}"
+          node ./.github/scripts/create.js "$DATE" "$TITLE" "$AUTHOR" "$CREDIT" "$VIDEO_URL" "$DESCRIPTION" "$SOURCE" "$FIELDS" "$SUBFIELDS" "$TAGS"
           git config user.name github-actions
           git config user.email github-actions@github.com
           git add ./submissions/"$AUTHOR - $TITLE.json"
@@ -43,7 +43,7 @@ jobs:
         with:
           route: POST /repos/${{ github.repository }}/issues
           title: "${{ env.AUTHOR }} - ${{ env.TITLE }}"
-          body: "<code>'${{ env.JSON }}'</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
+          body: "<code>'${{ github.event.client_payload.string }}'</code> [Edit here](${{ fromJson(steps.get_url.outputs.data).html_url }})"
           labels: "['submission']"
           head_sha: ${{ github.sha }}
         env:
