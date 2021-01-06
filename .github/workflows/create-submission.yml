@@ -36,7 +36,7 @@ jobs:
         id: get_url
         with:
           route: GET /repos/${{ github.repository }}/contents/{path}
-          path: 'submissions/- Grant Sanderson - All possible pythagorean triples, visualized.json'
+          path: 'submissions/ - Grant Sanderson - All possible pythagorean triples, visualized.json'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: octokit/request-action@v2.x
