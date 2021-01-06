@@ -13,7 +13,7 @@ async function run() {
         issue_number: process.argv[2]
     }).then(response => {
         var submissions = JSON.parse(fs.readFileSync('submissions.json'))
-        var submission = JSON.parse(response.data.body.replaceAll('\r', '').split('yaml\n')[1].split('```')[0]);
+        var submission = JSON.parse(response.data.body.replace('\r', '').split('yaml\n')[1].split('```')[0]);
         var newSubmission = []
         console.log(JSON.stringify(submission))
         // Because we keep the key:value pairs in the same order throughout the whole process,
