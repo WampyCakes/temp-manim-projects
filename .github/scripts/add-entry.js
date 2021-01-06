@@ -10,7 +10,7 @@ async function run() {
     await request('GET /repos/{owner}/{repo}/issues/{issue_number}', {
         owner: process.argv[3].split('/')[0],
         repo: process.argv[3].split('/')[1],
-        issue_number: number
+        issue_number: process.argv[2]
     }).then(response => {
         var submissions = JSON.parse(fs.readFileSync('submissions.json'))
         var submission = response.data.body.split('yaml\n')[1].split('```')[0];
