@@ -8,7 +8,7 @@ var fs = require('fs')
 var submissions = JSON.parse(fs.readFileSync('submissions.json'))
 var submission = get_data(process.argv[2], process.argv[3])
 var newSubmission = []
-console.log('args '+process.argv)
+console.log(JSON.stringify(submission))
 // Because we keep the key:value pairs in the same order throughout the whole process,
 // we can remove the keys. Between this and stringifying without extra whitespace, my
 // testing has shown this will reduce the size of the submissions.json file by roughly 90%.
@@ -33,7 +33,7 @@ function date_sort(a, b) {
 
 submissions.sort(date_sort)
 
-fs.writeFileSync('submissions.json', JSON.stringify(submissions))
+// fs.writeFileSync('submissions.json', JSON.stringify(submissions))
 
 async function get_data(number, repository) {
     console.log('repo: '+repository);
@@ -42,7 +42,7 @@ async function get_data(number, repository) {
         repo: repository.split('/')[1],
         issue_number: number
     }).then(response => {
-        return JSON.parse(response.body.split('yaml\n')[1].split('```')[0]);
+        return JSON.parse(response)//.body.split('yaml\n')[1].split('```')[0]);
     }).catch((error) => {
         console.log(error);
         return 'Error'
