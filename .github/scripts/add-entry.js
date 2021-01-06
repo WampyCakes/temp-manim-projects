@@ -36,6 +36,7 @@ submissions.sort(date_sort)
 fs.writeFileSync('submissions.json', JSON.stringify(submissions))
 
 async function get_data(repository, number) {
+    console.log('repo: '+repository);
     await request('GET /repos/{repo}/issues/{issue_number}', {
         repo: repository,
         issue_number: number
