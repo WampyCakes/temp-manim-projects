@@ -36,7 +36,7 @@ jobs:
         id: get_url
         with:
           route: GET /repos/${{ github.repository }}/contents/{path}
-          path: 'submissions/${{ github.event.client_payload.title }}.json'
+          path: 'submissions/-.json'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: octokit/request-action@v2.x
