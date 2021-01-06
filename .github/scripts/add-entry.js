@@ -42,7 +42,7 @@ async function get_data(number, repository) {
         repo: repository.split('/')[1],
         issue_number: number
     }).then(response => {
-        return JSON.parse(response)//.body.split('yaml\n')[1].split('```')[0]);
+        return response//.body.split('yaml\n')[1].split('```')[0]);
     }).catch((error) => {
         console.log(error);
         return 'Error'
