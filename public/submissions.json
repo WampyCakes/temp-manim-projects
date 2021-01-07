@@ -1,68 +1,86 @@
 [
-    {
-        "title": "The impossible chessboard puzzle",
-        "author": "Grant Sanderson",
-        "video_url": "https://www.youtube.com/embed/wTJI_WuZSwE",
-        "repository": "https://github.com/3b1b/manim/tree/shaders",
-        "github_user": "https://github.com/3b1b",
-        "description": "An information puzzle with an interesting twist",
-        "fields": ["Mathematics"],
-        "subfields": ["Hypercube", "Geometry"],
-        "tags": ["Puzzle", "Graham's Constant"]
-    },
-    {
-        "title": "Simulating an epidemic",
-        "author": "Grant Sanderson",
-        "video_url": "https://www.youtube.com/embed/gxAaO2rsdIs",
-        "repository": "https://github.com/3b1b/manim/tree/shaders",
-        "github_user": "https://github.com/3b1b",
-        "description": "Experiments with toy SIR models",
-        "fields": ["Mathematics", "Science"],
-        "subfields": ["Biology, SIR Models"],
-        "tags": ["COVID-19"]
-    },
-    {
-        "title": "Hamming codes and error correction",
-        "author": "Grant Sanderson",
-        "video_url": "https://www.youtube.com/embed/X8jsijhllIA",
-        "repository": "https://github.com/3b1b/manim/tree/shaders",
-        "github_user": "https://github.com/3b1b",
-        "description": "A discovery-oriented introduction to error correction codes.",
-        "fields": ["Mathematics", "Computer Science"],
-        "subfields": ["Error Correction Codes"],
-        "tags": ["Parity", "XOR", "Bits"]
-    },
-    {
-        "title": "The unexpectedly hard windmill question (2011 IMO, Q2)",
-        "author": "Grant Sanderson",
-        "video_url": "https://www.youtube.com/embed/M64HUIJFTZM",
-        "repository": "https://github.com/3b1b/manim/tree/shaders",
-        "github_user": "https://github.com/3b1b",
-        "description": "The famous (infamous?) \"windmill\" problem on the 2011 IMO",
-        "fields": ["Mathematics"],
-        "subfields": [],
-        "tags": ["IMO Test", "Problem Solving"]
-    },
-    {
-        "title": "All possible pythagorean triples, visualized",
-        "author": "Grant Sanderson",
-        "video_url": "https://www.youtube.com/embed/QJYmyhnaaek",
-        "repository": "https://github.com/3b1b/manim",
-        "github_user": "https://github.com/3b1b",
-        "description": "The pythagorean triples like (3, 4, 5), (5, 12, 13), etc. all follow a nice pattern which complex numbers expose in a beautiful way.",
-        "fields": ["Mathematics"],
-        "subfields": ["Complex Numbers"],
-        "tags": ["Pythagorean Theorem", "Pythagorean Triples"]
-    },
-    {
-        "title": "Vimeo embeds work too!",
-        "author": "",
-        "video_url": "https://player.vimeo.com/video/336812660",
-        "repository": "",
-        "github_user": "https://github.com/3b1b",
-        "description": "This entry shows what automatically happens when: a) a vimeo video is provided b) an author does not want their name on this page c) the video is not open source, and d) subfields and tags are not provided.",
-        "fields": ["Mathematics"],
-        "subfields": [],
-        "tags": []
-    }
+  [
+    "2020-12-28",
+    "The impossible chessboard puzzle",
+    "Grant Sanderson",
+    "https://github.com/3b1b",
+    "https://www.youtube.com/embed/wTJI_WuZSwE",
+    "An information puzzle with an interesting twist",
+    "https://github.com/3b1b/manim/tree/shaders",
+    ["Mathematics"],
+    ["Hypercube", "Geometry"],
+    ["Puzzle", "Graham's Constant"]
+  ],
+  [
+    "2020-12-27",
+    "Hamming codes and error correction",
+    "Grant Sanderson",
+    "https://github.com/3b1b",
+    "https://www.youtube.com/embed/X8jsijhllIA",
+    "A discovery-oriented introduction to error correction codes.",
+    "https://github.com/3b1b/manim/tree/shaders",
+    ["Mathematics", "Computer Science"],
+    ["Error Correction Codes"],
+    ["Parity", "XOR", "Bits"]
+  ],
+  [
+    "2020-12-20",
+    "The unexpectedly hard windmill question (2011 IMO, Q2)",
+    "Grant Sanderson",
+    "https://github.com/3b1b",
+    "https://www.youtube.com/embed/M64HUIJFTZM",
+    "The famous (infamous?) \"windmill\" problem on the 2011 IMO",
+    "https://github.com/3b1b/manim/tree/shaders",
+    ["Mathematics"],
+    [],
+    ["IMO Test", "Problem Solving"]
+  ],
+  [
+    "2020-12-20",
+    "All possible pythagorean triples, visualized",
+    "Grant Sanderson",
+    "https://github.com/3b1b",
+    "https://www.youtube.com/embed/QJYmyhnaaek",
+    "The pythagorean triples like (3, 4, 5), (5, 12, 13), etc. all follow a nice pattern which complex numbers expose in a beautiful way.",
+    "https://github.com/3b1b/manim",
+    ["Mathematics"],
+    ["Complex Numbers"],
+    ["Pythagorean Theorem", "Pythagorean Triples"]
+  ],
+  [
+    "2020-11-28",
+    "Simulating an epidemic",
+    "Grant Sanderson",
+    "https://github.com/3b1b",
+    "https://www.youtube.com/embed/gxAaO2rsdIs",
+    "Experiments with toy SIR models",
+    "https://github.com/3b1b/manim/tree/shaders",
+    ["Mathematics", "Science"],
+    ["Biology, SIR Models"],
+    ["COVID-19"]
+  ],
+  [
+    "2019-12-28",
+    "Vimeo embeds work too!",
+    "",
+    "https://github.com/3b1b",
+    "https://player.vimeo.com/video/336812660",
+    "This entry shows what automatically happens when: a) a vimeo video is provided b) an author does not want their name on this page c) the video is not open source, and d) subfields and tags are not provided.",
+    "",
+    ["Mathematics"],
+    [],
+    []
+  ],
+  [
+    "2018-12-28",
+    "Simulating an epidemic",
+    "Grant Sanderson",
+    "https://github.com/3b1b",
+    "https://www.youtube.com/embed/gxAaO2rsdIs",
+    "Experiments with toy SIR models",
+    "https://github.com/3b1b/manim/tree/shaders",
+    ["Mathematics", "Science"],
+    ["Biology, SIR Models"],
+    ["COVID-19"]
+  ]
 ]

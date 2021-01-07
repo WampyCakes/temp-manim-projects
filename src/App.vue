@@ -6,17 +6,17 @@
     crossorigin="anonymous"
   /> -->
   <navbar/>
-  <projects/>
+  <website-body/>
 </template>
 
 <script>
-import Projects from './components/Projects.vue'
+import WebsiteBody from './components/WebsiteBody.vue'
 import Navbar from './components/Navbar.vue'
 
 export default {
   name: 'App',
   components: {
-    Projects,
+    WebsiteBody,
     Navbar
   }
 }

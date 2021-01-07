@@ -52,7 +52,29 @@
       </div>
     </nav>
   </header>
+  <submit-video :value="clicked"></submit-video>
 </template>
+
+<script>
+import SubmitVideo from './SubmitVideo.vue'
+
+export default {
+  name: 'Navbar',
+  components: {
+    SubmitVideo
+  },
+  data() {
+    return {
+      clicked: false
+    }
+  },
+  methods: {
+    captcha() {
+      this.clicked = true
+    }
+  }
+}
+</script>
 
 <style scoped>
 i {

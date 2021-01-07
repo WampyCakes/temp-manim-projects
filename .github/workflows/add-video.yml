@@ -1,0 +1,24 @@
+name: Add Approved Video
+
+on:
+  issues:
+    types: [closed]
+
+jobs:
+  add:
+    if: contains(github.event.issue.labels.*.name, 'submission') && contains(github.event.issue.labels.*.name, 'submission approved')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
+      - run: |
+          npm i @octokit/request
+          node ./.github/scripts/add-entry.js "${{ github.event.issue.number }}" "${{ github.repository }}"
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add "submissions.json"
+          git commit -m "Automatically added an entry to submissions.json"
+          git push origin main

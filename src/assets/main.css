@@ -2,6 +2,12 @@ body {
   background-color: #ece6e2;
 }
 
+.spinner {
+  width: 3rem; 
+  height: 3rem; 
+  color: #e07a5f;
+}
+
 .rv-text {
   white-space: unset !important;
   overflow: visible !important;
