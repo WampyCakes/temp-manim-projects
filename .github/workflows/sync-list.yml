@@ -1,10 +1,10 @@
 name: Sync Submissions List
 
 on:
-  # push:
-  #   branches: ['main']
-  #   paths:
-  #     - 'submissions.json'
+  push:
+    branches: ['new-main']
+    paths:
+      - './public/submissions.json'
   schedule:
     - cron: '0 0 * * *'
 
@@ -20,7 +20,7 @@ jobs:
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout gh-pages
-          git checkout main submissions.json
-          git add submissions.json
+          git checkout new-main ./public/submissions.json
+          git add ./public/submissions.json
           git commit -m "Automatically updated submissions.json"
           git push origin gh-pages
