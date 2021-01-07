@@ -4,7 +4,7 @@ on:
   push:
     branches: ['new-main']
     paths:
-      - './public/submissions.json'
+      - '/public/submissions.json'
   schedule:
     - cron: '0 0 * * *'
 
