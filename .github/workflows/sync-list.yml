@@ -1,12 +1,14 @@
 name: Sync Submissions List
 
 on:
-  push:
-    branches: ['new-main']
-    paths:
-      - './public/submissions.json'
-#   schedule:
-#     - cron: '0 0 * * *'
+  # push:
+  #   branches: ['new-main']
+  #   paths:
+  #     - './public/submissions.json'
+  schedule:
+    - cron: '0 0 * * *'
+  repository_dispatch:
+    types: [sync]
 
 jobs:
   sync:
