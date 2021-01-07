@@ -23,6 +23,7 @@ jobs:
           git config user.email github-actions@github.com
           git checkout gh-pages
           git checkout new-main ./public/submissions.json
+          rm -f submissions.json
           mv ./public/submissions.json .
           rm -rf public
           git add submissions.json
