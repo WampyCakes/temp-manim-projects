@@ -12,8 +12,8 @@ async function run() {
     }).then(response => {
         // For some reason unknown to me, requiring the JSON files throws a Module Not Found Error
         // This works locally, but not on GitHub. Why??
-        // var submissions = require('./submissions.json')
-        var submissions = JSON.parse(fs.readFileSync('submissions.json'))
+        // var submissions = require('./public/submissions.json')
+        var submissions = JSON.parse(fs.readFileSync('./public/submissions.json'))
         var submission = JSON.parse(response.data.body.replace('\r', '').split('yaml\n')[1].split('```')[0]);
         var newSubmission = []
         // Because we keep the key:value pairs in the same order throughout the whole process,
@@ -40,7 +40,7 @@ async function run() {
 
         submissions.sort(date_sort)
 
-        fs.writeFileSync('submissions.json', JSON.stringify(submissions))
+        fs.writeFileSync('./public/submissions.json', JSON.stringify(submissions))
     }).catch((error) => {
         console.log(error);
     })
