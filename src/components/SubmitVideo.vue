@@ -236,30 +236,20 @@ export default {
     //     }
     //   });
     },
-    getData() {
-        return [
-            new Date().toISOString().substring(0, 10),
-            this.title.trim(),
-            this.author.trim(),
-            this.credit.trim(),
-            this.handleURL().trim(),
-            this.description.trim(),
-            this.source.trim(),
-            this.fields.trim().split(', '),
-            this.subfields.trim().split(', '),
-            this.tags.trim().split(', ')
-            // "date": new Date().toISOString().substring(0, 10),
-            // "title": this.title,
-            // "author": this.author,
-            // "credit": this.credit,
-            // "video_url": this.url,
-            // "description": this.description,
-            // "source": this.source,
-            // "fields": this.fields,
-            // "subfields": this.subfields,
-            // "tags": this.tags
-        ]
-    },
+    // getData() {
+    //     return [
+    //         // "date": new Date().toISOString().substring(0, 10),
+    //         // "title": this.title,
+    //         // "author": this.author,
+    //         // "credit": this.credit,
+    //         // "video_url": this.url,
+    //         // "description": this.description,
+    //         // "source": this.source,
+    //         // "fields": this.fields,
+    //         // "subfields": this.subfields,
+    //         // "tags": this.tags
+    //     ]
+    // },
     handleURL() {
         if(this.url.includes('='))
             return 'https://www.youtube.com/embed/'+this.url.split('=')[1]
@@ -301,18 +291,31 @@ export default {
         // document.getElementById('form').reset()
         // document.querySelector('#current').textContent = 0
         // new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
+        
+        var JSONData = {
+            "date": new Date().toISOString().substring(0, 10),
+            "title": this.title.trim(),
+            "author": this.author.trim(),
+            "credit": this.credit.trim(),
+            "video_url": this.handleURL().trim(),
+            "description": this.description.trim(),
+            "source": this.source.trim(),
+            "fields": this.fields.trim().split(', '),
+            "subfields": this.subfields.trim().split(', '),
+            "tags": this.tags.trim().split(', ')
+        }
+
         fetch('https://showcase.manim.workers.dev/', {
             method: 'POST',
             headers: {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Content-Type': 'application/json'
+                // 'Access-Control-Allow-Origin': '*'
             },
-            body: JSON.stringify(this.getData())
-            // mode: 'no-cors'
+            body: JSONData
             })
             .then(response => response.json())
             .then(data => {
-                this.json = data
+                // this.json = data
                 console.log('Success:', data);
                 // document.getElementById('form').reset()
             })
