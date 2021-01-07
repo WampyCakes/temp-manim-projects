@@ -23,6 +23,6 @@ jobs:
           git config user.email github-actions@github.com
           git checkout gh-pages
           git checkout new-main ./public/submissions.json
-          git add ./public/submissions.json
+          git add submissions.json
           git commit -m "Automatically updated submissions.json"
           git push origin gh-pages
