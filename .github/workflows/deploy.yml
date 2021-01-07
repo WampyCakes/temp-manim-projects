@@ -45,3 +45,21 @@ jobs:
             BRANCH: gh-pages
             FOLDER: dist
             SINGLE_COMMIT: true
+  sync:
+    name: Sync Submissions
+    needs: [deploy]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+          fetch-depth: 0
+      - run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git checkout gh-pages
+          git checkout new-main submissions.json
+          git add submissions.json
+          git commit -m "Automatically updated submissions.json"
+          git push origin gh-pages
