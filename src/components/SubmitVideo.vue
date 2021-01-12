@@ -360,7 +360,7 @@ export default {
             this.retry = true;
         }else if(response.status == 200){
             response.json().then(data => {
-                html = `<p style="font-size: 18px;font-family: Garamond, serif;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.url}"> You can view your submission here.</a></p>`
+                html = `<p style="font-size: 18px;font-family: Garamond, serif;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.url}"> You can view your submission here.</a> If your video does not appear on the Showcase after a while, changes may have been requested <a href="${data.url}"> here.</a> </p>`
                 document.getElementById('status').innerHTML = html;
                 this.submitted = true;
             })
