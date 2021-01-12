@@ -137,7 +137,6 @@ export default {
 
           // This is old stuff from when I was making the pages logic. After it has been determined the pages logic completely works, this is safe to delete.
           // else{
-          //   console.log('cat');
           //   this.pageNumbers.push('...', this.numberOfPages)
           // }
           

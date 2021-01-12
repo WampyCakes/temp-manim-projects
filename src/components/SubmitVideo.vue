@@ -37,14 +37,14 @@
                         <!-- May be possible to accept double quotes and backslashes and automatically escape them? Haven't tried. Maybe in the future *shrug* -->
                         <div class="input-group mt-1 mb-3">
                             <span class="input-group-text">Title</span>
-                            <input type="text" class="form-control" aria-label="Title" v-model="title" pattern='[^"\\]{5,175}' required>
+                            <input type="text" class="form-control" aria-label="Title" v-model="title" pattern='[^"\\]{5,175}' required changes>
                             <div class="invalid-feedback">
                                 Please include a title for the video that is between 5-175 characters and does not contain a <strong>\</strong> or <strong>"</strong>.
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Author</span>
-                            <input type="text" class="form-control" aria-label="Author" v-model="author" pattern='[^"\\]{2,30}' required>
+                            <input type="text" class="form-control" name="author" aria-label="Author" v-model="author" pattern='[^"\\]{2,30}' required changes>
                             <div class="invalid-feedback">
                                 Please include an author for the video that is between 2-30 characters and does not contain a <strong>\</strong> or <strong>"</strong>.
                             </div>
@@ -54,16 +54,16 @@
                             <!-- Instead of complaining about my awful regexes, how about you fix them, eh? -->
                             <!-- And then after you fix my regexes, make sure the correct data from the URL -->
                             <!-- is being passed to the data properties. Otherwise preview and the submission will break. -->
-                            <input type="text" class="form-control" placeholder="Link to repository or YouTube profile" 
-                            pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*|[^"\\]*\byoutube.com\b[^"\\]*' aria-label="Credit" maxlength="150" v-model="credit">
+                            <input type="text" class="form-control" name="credit" placeholder="Link to repository or YouTube profile" 
+                            pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*|[^"\\]*\byoutube.com\b[^"\\]*' aria-label="Credit" maxlength="150" v-model="credit" changes>
                             <div class="invalid-feedback">
                                 The link must point to a GitHub, GitLab, or BitBucket profile or a YouTube channel.
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Video URL</span>
-                            <input type="text" id="url" class="form-control"
-                            placeholder="YouTube or Vimeo URL" aria-label="Video URL" pattern='[^"\\]*watch\?v=[^"\\]*|[^"\\]*\bvimeo.com/\b[0-9]*' maxlength="150" v-model="url" required>
+                            <input type="text" class="form-control"
+                            placeholder="YouTube or Vimeo URL" aria-label="Video URL" pattern='[^"\\]*watch\?v=[^"\\]*|[^"\\]*\bvimeo.com/\b[0-9]*' maxlength="150" v-model="url" required changes>
                             <div class="invalid-feedback">
                                 YouTube links should look like <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> and Vimeo links should look like
                                 <code>https://vimeo.com/148751763</code>
@@ -72,7 +72,7 @@
                         <div class="input-group">
                             <span class="input-group-text">Description</span>
                             <textarea class="form-control" id="description" aria-label="Description" placeholder="Detailed information about the video" 
-                            minlength="20" maxlength="500" v-on:keyup="updateCount()" v-model="description" required></textarea>
+                            minlength="20" maxlength="500" v-on:keyup="updateCount()" v-model="description" required changes></textarea>
                             <div id="descriptionChars" class="customValidation">Double quotes and backslashes are not allowed.</div>
                             <div class="invalid-feedback">
                                 Please include a description of the video.
@@ -86,7 +86,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Source Code (optional)</span>
                             <input type="text" class="form-control" placeholder="Link to the video code's repository" pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*'
-                             aria-label="Source" maxlength="150" v-model="source">
+                             aria-label="Source" maxlength="150" v-model="source" changes>
                             <div class="invalid-feedback">
                                 The link must point to a GitHub, GitLab, or BitBucket repository.
                             </div>
@@ -95,7 +95,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Fields</span>
                             <input type="text" class="form-control" placeholder="Mathematics, Science, Music" aria-label="Fields"
-                            pattern='([^"\\,]){1,20}(, ([^"\\,]){1,20}){0,2}' v-model="fields" required>
+                            pattern='([^"\\,]){1,20}(, ([^"\\,]){1,20}){0,2}' v-model="fields" required changes>
                             <div class="invalid-feedback">
                                 Fields must be no longer than 20 characters, be separated by commas, and cannot contain a <strong>\</strong> or <strong>"</strong>  (Max: 3 fields, Minimum: 1)
                             </div>
@@ -103,7 +103,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Subfields</span>
                             <input type="text" class="form-control" placeholder="Group Theory, Cell Theory" aria-label="Subfields"
-                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="subfields" required>
+                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="subfields" required changes>
                             <div class="invalid-feedback">
                                 Subfields must be no longer than 25 characters, be separated by commas, and cannot contain a <strong>\</strong> or <strong>"</strong>  (Max: 3 subfields, Minimum: 1)
                             </div>
@@ -111,7 +111,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Tags</span>
                             <input type="text" class="form-control" placeholder="Nodes, Trees, Sorting" aria-label="Tags"
-                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="tags" required>
+                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="tags" required changes>
                             <div class="invalid-feedback">
                                 Tags must be no longer than 25 characters, be separated by commas, and cannot contain a <strong>\</strong> or <strong>"</strong>  (Max: 3 tags, Minimum: 1)
                             </div>
@@ -123,7 +123,7 @@
                             </label>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary" v-on:click="preview()">Preview</button>
+                            <button type="submit" class="btn btn-primary">Preview</button>
                         </div>
                     </form>
                 </div>
@@ -132,16 +132,28 @@
                         <div class="col border p-4 d-flex flex-column position-static m-2">
                             <manim-video v-if="ready" :videoData="getData()"/>
                         </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" v-on:click="previous()">Edit</button>
-                        <button type="button" class="btn btn-primary" v-on:click="submit()">Submit</button>
+                        <form class="needs-validation mr-1" novalidate>
+                            <div class="form-group mb-3">
+                                <input class="form-check-input" type="checkbox" id="confirm" required>
+                                <label class="form-check-label" for="confirm">
+                                    Everything looks good! (Accuracy, Spelling, etc.)
+                                </label>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" v-on:click="edit()">Edit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
                 <div class="carousel-item">
-                    <p>{{ json }}</p>
+                    <div v-if="loading" class="spinner spinner-border m-3" role="status">
+                        <span class="sr-only">Working...</span>
+                    </div>
+                    <div id="status"></div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-primary" v-on:click="previous()">Edit</button>
+                        <button v-if="conflict" type="button" class="btn btn-primary" v-on:click="edit()">Edit</button>
+                        <button v-if="retry && loading == false" type="button" class="btn btn-primary" v-on:click="submit()">Retry</button>
                         <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
                     </div>
                 </div>
@@ -186,18 +198,61 @@ export default {
     });
   },
   mounted() {
-      document.getElementById('description').addEventListener('keypress', (e) => {
+    document.getElementById('description').addEventListener('keypress', (e) => {
         if(e.key == '"' || e.key == '\\'){
             e.preventDefault()
             document.getElementById('descriptionChars').style.display = 'unset'
         }else
             document.getElementById('descriptionChars').style.display = 'none'
     })
+
+    $(document).on('hidden.bs.modal', '#submissionModal', () => {
+        if(this.submitted){
+            this.title = ''
+            this.url = ''
+            this.description = ''
+            this.source = ''
+            this.fields = ''
+            this.subfields = ''
+            this.tags = ''
+            document.getElementsByName('checkbox')[0].checked = false
+            document.getElementById('current').textContent = 0
+            new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
+        }
+    })
+
+    var self = this;
+    Array.prototype.slice.call(document.querySelectorAll('.needs-validation'))
+        .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+            event.preventDefault()
+            event.stopPropagation()
+            if (!form.checkValidity())
+                form.classList.add('was-validated')
+            else{
+                if(form.id == 'form'){
+                    self.ready = true;
+                    new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).next()    
+                }else {
+                    self.submit();
+                }
+            }
+        }, false)
+        })
+    
+    Array.prototype.slice.call(document.querySelectorAll('[changes]'))
+        .forEach(function (field) {
+        field.addEventListener('change', () => {
+            if(document.getElementById('confirm').checked)
+                document.getElementById('confirm').checked = false
+        }, false)
+        })
   },
   data() {
     return {
         // Setting "disabled" to true will turn off the submission form after a redeploy. This is a safety feature! Don't remove.
         disabled: false,
+        github_url: '',
         colors: ["#81b29a", "#454866", "#e07a5f"],
         title: '',
         author: '',
@@ -208,8 +263,12 @@ export default {
         fields: '',
         subfields: '',
         tags: '',
-        json: '',
-        ready: false
+        status: '',
+        loading: true,
+        ready: false,
+        conflict: false,
+        retry: false,
+        submitted: false
     }
   },
   updated() {
@@ -227,29 +286,28 @@ export default {
     captcha() {
       this.$parent.clicked = false
       var self = this
-      self.modal.show()
-    //   RVerify.action(function(res){
-    //     if(res == 1){
-    //         setTimeout(() => {
-    //         self.modal.show()
-    //         }, 500)
-    //     }
-    //   });
+      RVerify.action(function(res){
+        if(res == 1){
+            setTimeout(() => {
+            self.modal.show()
+            }, 500)
+        }
+      });
     },
-    // getData() {
-    //     return [
-    //         // "date": new Date().toISOString().substring(0, 10),
-    //         // "title": this.title,
-    //         // "author": this.author,
-    //         // "credit": this.credit,
-    //         // "video_url": this.url,
-    //         // "description": this.description,
-    //         // "source": this.source,
-    //         // "fields": this.fields,
-    //         // "subfields": this.subfields,
-    //         // "tags": this.tags
-    //     ]
-    // },
+    getData() {
+        return [
+            new Date().toISOString().substring(0, 10),
+            this.title.trim(),
+            this.author.trim(),
+            this.credit.trim(),
+            this.handleURL().trim(),
+            this.description.trim(),
+            this.source.trim(),
+            this.fields.trim().split(', '),
+            this.subfields.trim().split(', '),
+            this.tags.trim().split(', ')
+        ]
+    },
     handleURL() {
         if(this.url.includes('='))
             return 'https://www.youtube.com/embed/'+this.url.split('=')[1]
@@ -259,39 +317,11 @@ export default {
     updateCount() {
         document.querySelector('#current').textContent = document.querySelector('#description').value.length
     },
-    previous() {
-        new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).prev()
+    edit() {
+        this.conflict = false;
+        new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
     },
-    preview() {
-        var forms = document.querySelectorAll('.needs-validation')
-        var self = this;
-
-        Array.prototype.slice.call(forms)
-            .forEach(function (form) {
-            form.addEventListener('submit', function (event) {
-                event.preventDefault()
-                event.stopPropagation()
-                if (!form.checkValidity())
-                    form.classList.add('was-validated')
-                else{
-                    self.ready = true;
-                    new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).next()
-                }
-            }, false)
-            })
-    },
-    submit() {
-        // var xhr = new XMLHttpRequest();
-        // xhr.open("POST", 'https://showcase.manim.workers.dev/', true);
-        // xhr.setRequestHeader('Content-Type', 'application/json');
-        // xhr.setRequestHeader('Access-Control-Allow-Origin', '*')
-        // xhr.send(JSON.stringify({
-        //     value: data
-        // }));
-        // document.getElementById('form').reset()
-        // document.querySelector('#current').textContent = 0
-        // new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
-        
+    async submit() {
         var JSONData = {
             "date": new Date().toISOString().substring(0, 10),
             "title": this.title.trim(),
@@ -304,25 +334,37 @@ export default {
             "subfields": this.subfields.trim().split(', '),
             "tags": this.tags.trim().split(', ')
         }
+        let html;
+        this.loading = true;
+        document.getElementById('status').innerHTML = '';
+        new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(2)
 
-        fetch('https://showcase.manim.workers.dev/', {
+        const response = await fetch('https://showcase.manim.workers.dev/', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-                // 'Access-Control-Allow-Origin': '*'
-            },
-            body: JSONData
+            body: JSON.stringify(JSONData)
+        }).catch((error) => {
+            this.loading = false;
+            this.retry = true;
+            html = `<p style="font-size: 18px;font-family: Garamond, serif;">It appears that there was error while sending your video submission. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${this.github_url}"> GitHub repository.</a> The error has been logged to your browser console.</p>`
+            document.getElementById('status').innerHTML = html;
+            console.error('Submission Error:', error);
+        });
+        this.loading = false;
+        if(response.status == 409){
+            this.conflict = true;
+            html = '<p style="font-size: 18px;font-family: Garamond, serif;">Oh no! There is already a video with the same title by the same author. Please adjust.</p>'
+            document.getElementById('status').innerHTML = html;
+        }else if(response.status == 500){
+            html = `<p style="font-size: 18px;font-family: Garamond, serif;">It appears that we had an internal error while trying to submit your video. The error has been logged for troubleshooting. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${this.github_url}"> GitHub repository.</a></p>`
+            document.getElementById('status').innerHTML = html;
+            this.retry = true;
+        }else if(response.status == 200){
+            response.json().then(data => {
+                html = `<p style="font-size: 18px;font-family: Garamond, serif;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.url}"> You can view your submission here.</a></p>`
+                document.getElementById('status').innerHTML = html;
+                this.submitted = true;
             })
-            .then(response => response.json())
-            .then(data => {
-                // this.json = data
-                console.log('Success:', data);
-                // document.getElementById('form').reset()
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
-        new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).next()
+        }
     }
   }
 }
@@ -353,6 +395,11 @@ code {
     color: #81b29a;
     font-weight: bolder;
     white-space: nowrap
+}
+
+p {
+    font-size: 18px; 
+    font-family: Garamond, serif;
 }
 
 @media only screen and (max-width: 500px) {

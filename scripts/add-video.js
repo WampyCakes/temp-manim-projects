@@ -3,8 +3,7 @@
 const { request } = require('@octokit/request')
 var fs = require('fs')
 
-run();
-async function run() {
+(async function() {
     await request('GET /repos/{owner}/{repo}/issues/{issue_number}', {
         owner: process.argv[3].split('/')[0],
         repo: process.argv[3].split('/')[1],
@@ -44,4 +43,4 @@ async function run() {
     }).catch((error) => {
         console.log(error);
     })
-}
+})()
