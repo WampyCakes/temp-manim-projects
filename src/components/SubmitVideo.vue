@@ -54,7 +54,7 @@
                             <!-- Instead of complaining about my awful regexes, how about you fix them, eh? -->
                             <!-- And then after you fix my regexes, make sure the correct data from the URL -->
                             <!-- is being passed to the data properties. Otherwise preview and the submission will break. -->
-                            <input type="text" class="form-control" name="credit" placeholder="Link to repository or YouTube profile" 
+                            <input type="text" class="form-control" name="credit" placeholder="Link to your repository profile or YouTube channel" 
                             pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*|[^"\\]*\byoutube.com\b[^"\\]*' aria-label="Credit" maxlength="150" v-model="credit" changes>
                             <div class="invalid-feedback">
                                 The link must point to a GitHub, GitLab, or BitBucket profile or a YouTube channel.
