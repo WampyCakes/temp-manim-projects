@@ -251,7 +251,7 @@ export default {
   data() {
     return {
         // Setting "disabled" to true will turn off the submission form after a redeploy. This is a safety feature! Don't remove.
-        disabled: false,
+        disabled: true,
         github_url: '',
         colors: ["#81b29a", "#454866", "#e07a5f"],
         title: '',
