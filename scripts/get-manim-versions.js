@@ -1,7 +1,9 @@
 const https = require('https')
 const fs = require('fs')
 
+console.log('test');
 if(new Date().getHours() == 0){
+    console.log('Checking PyPi for releases');
     https.get('https://pypi.org/pypi/manim/json', (response) => {
         let data = '';
 
