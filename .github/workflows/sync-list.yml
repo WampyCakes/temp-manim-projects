@@ -17,7 +17,7 @@ on:
 
 jobs:
   sync:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
       # fetch-depth: 0 used here to checkout both branches. Is there a better way? Used in deploy.yml as well.
       - uses: actions/checkout@v2
@@ -29,7 +29,7 @@ jobs:
           node-version: 12.x
       - run: |
           hour=$(date +%H)
-          if (( $hour == 0 )) ; then
+          if [ $hour == 0 ] ; then
               node ./scripts/get-manim-versions.js
           fi
           git config user.name github-actions
