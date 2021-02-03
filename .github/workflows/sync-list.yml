@@ -29,7 +29,7 @@ jobs:
           node-version: 12.x
       - run: |
           hour=$(date +%H)
-          if [ $hour == 0 ] ; then
+          if (( $hour == 0 )) ; then
               node ./scripts/get-manim-versions.js
           fi
           git config user.name github-actions
