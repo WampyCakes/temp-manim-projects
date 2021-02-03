@@ -1,12 +1,17 @@
+# Syncs the submissions.json file from the main branch to gh-pages branch to be read by the deployed site.
 name: Sync Submissions List
 
 on:
+  # On push may be appropriate to be deleted later; this was meant to immediately sync the submissions.json file
+  # after directly editing it when I was testing
   # push:
   #   branches: ['new-main']
   #   paths:
   #     - 'submissions.json'
+  # Run every 6 hours
   schedule:
     - cron: '0 */6 * * *'
+  # Or with the correct access token, it can be triggered with a GitHub API call
   repository_dispatch:
     types: [sync]
 
@@ -18,11 +23,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
+      - name: Use Node.js 12.x
+        uses: actions/setup-node@v1
+        with:
+          node-version: 12.x
       - run: |
+          node ./scripts/get-manim-versions.js
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout gh-pages
           git checkout new-main submissions.json
           git add submissions.json
-          git commit -m "Automatically updated submissions.json"
+          git add manim-versions.json
+          git commit -m "Automatically updated submissions.json and checked Manim releases"
           git push origin gh-pages
