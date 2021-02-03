@@ -28,7 +28,10 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          node ./scripts/get-manim-versions.js
+          hour=$(date +%H)
+          if [ $hour == 0 ] ; then
+              node ./scripts/get-manim-versions.js
+          fi
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout gh-pages
