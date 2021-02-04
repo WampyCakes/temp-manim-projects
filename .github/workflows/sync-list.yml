@@ -28,11 +28,11 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          node ./scripts/get-manim-versions.js
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout gh-pages
           git checkout new-main submissions.json
+          node ./scripts/get-manim-versions.js
           git add submissions.json
           git add manim-versions.json
           git commit -m "Automatically updated submissions.json and checked Manim releases"
