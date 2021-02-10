@@ -1,4 +1,4 @@
-# On a push, rebuild the website, redeploy, then sync the submissions.json file to the gh-pages branch
+# On a push, rebuild the website, redeploy, then sync the videos.json file to the gh-pages branch
 # This is NOT triggered when a GitHub Workflow pushes changes!
 name: Build and Deploy
 
@@ -48,7 +48,7 @@ jobs:
             FOLDER: dist
             SINGLE_COMMIT: true
   sync:
-    name: Sync Submissions
+    name: Sync Videos
     needs: [deploy]
     runs-on: ubuntu-latest
     steps:
@@ -62,12 +62,14 @@ jobs:
         with:
           node-version: 12.x
       - run: |
-          node ./scripts/get-manim-versions.js
           git config user.name github-actions
           git config user.email github-actions@github.com
           git checkout gh-pages
-          git checkout new-main submissions.json
-          git add submissions.json
+          git checkout new-main videos.json
+          git checkout new-main scripts/get-manim-versions.js
+          node ./scripts/get-manim-versions.js
+          git reset -- scripts
+          git add videos.json
           git add manim-versions.json
-          git commit -m "Automatically updated submissions.json and checked Manim releases"
+          git commit -m "Automatically updated videos.json and checked Manim releases"
           git push origin gh-pages
