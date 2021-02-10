@@ -32,7 +32,7 @@ jobs:
           git config user.email github-actions@github.com
           git checkout gh-pages
           git checkout new-main videos.json
-          git checkout new-main /scripts/get-manim-versions.js
+          git checkout new-main scripts/get-manim-versions.js
           node get-manim-versions.js
           git add videos.json
           git add manim-versions.json
