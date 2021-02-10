@@ -1,9 +1,12 @@
-const https = require('https')
-const fs = require('fs')
+const https = require('https');
+const fs = require('fs');
+const path =  require('path');
+
+var scriptName = path.basename(__filename)
 
 if(new Date().getHours() == 0){
     try {
-        console.log('Checking PyPi for Manim releases');
+        console.log(scriptName+' - Checking PyPi for Manim releases.');
         https.get('https://pypi.org/pypi/manim/json', (response) => {
             let data = '';
 
@@ -12,10 +15,13 @@ if(new Date().getHours() == 0){
             });
 
             response.on('end', () => {
-                fs.writeFileSync('manim-versions.json', JSON.stringify(Object.keys(JSON.parse(data).releases).reverse()))
+                fs.writeFileSync('manim-versions.json', JSON.stringify(Object.keys(JSON.parse(data).releases).reverse()));
+                console.log(scriptName+' - Wrote the manim-versions.json file.');
             })
         })       
     } catch (error) {
         console.log(error);    
     }
+}else {
+    console.log(scriptName+' - Not checking PyPi at this hour.');
 }
