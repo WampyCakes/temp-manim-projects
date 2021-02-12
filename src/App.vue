@@ -21,7 +21,6 @@ export default {
     WebsiteHeader,
     WebsiteBody,
     WebsiteFooter
-  },
   }
 }
 </script>
