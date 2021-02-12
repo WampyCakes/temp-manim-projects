@@ -1,4 +1,5 @@
 <template>
+<!-- This modal only shows if disabled is true -->
 <div class="modal fade" id="disabledModal" tabindex="-1" role="dialog" aria-labelledby="disabledModal" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -12,7 +13,7 @@
         <p>The video submission form has been temporarily disabled. Check back at a later time!</p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn" data-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
@@ -33,29 +34,36 @@
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <form id="form" class="needs-validation mr-1" novalidate>
-                        <!-- All fields must disallow double quotes and backslashes. These are the only characters that can give JSON trouble according to some StackOverflow answers. -->
-                        <!-- May be possible to accept double quotes and backslashes and automatically escape them? Haven't tried. Maybe in the future *shrug* -->
+                        <!-- All fields must disallow double quotes and backslashes. These are the only characters that can give JSON trouble according to some StackOverflow answers.
+                        May be possible to accept double quotes and backslashes and automatically escape them? Haven't tried. Maybe in the future *shrug* -->
                         <div class="input-group mt-1 mb-3">
                             <span class="input-group-text">Title</span>
-                            <input type="text" class="form-control" aria-label="Title" v-model="title" pattern='[^"\\]{5,175}' required changes>
+                            <input type="text" class="form-control" aria-label="Title" v-model="title" pattern='[^"\\]{5,175}' required>
                             <div class="invalid-feedback">
                                 Please include a title for the video that is between 5-175 characters and does not contain a <strong>\</strong> or <strong>"</strong>.
                             </div>
                         </div>
                         <div class="input-group mb-3">
                             <span class="input-group-text">Author</span>
-                            <input type="text" class="form-control" name="author" aria-label="Author" v-model="author" pattern='[^"\\]{2,30}' required changes>
+                            <input type="text" class="form-control" name="author" aria-label="Author" v-model="author" pattern='[^"\\]{2,30}' required>
                             <div class="invalid-feedback">
                                 Please include an author for the video that is between 2-30 characters and does not contain a <strong>\</strong> or <strong>"</strong>.
                             </div>
                         </div>
                         <div class="input-group mb-3">
+                            <span class="input-group-text">GitHub username (optional)</span>
+                            <input type="text" class="form-control" name="gh_username" aria-label="GitHub username" v-model="gh_user" pattern='[^"\\]{2,30}' placeholder="Your GitHub username is required to edit this video in the future">
+                            <div class="invalid-feedback">
+                                invalid github usernmae
+                            </div>
+                        </div>
+                        <div class="input-group mb-3">
                             <span class="input-group-text">Credit (optional)</span>
-                            <!-- Instead of complaining about my awful regexes, how about you fix them, eh? -->
-                            <!-- And then after you fix my regexes, make sure the correct data from the URL -->
-                            <!-- is being passed to the data properties. Otherwise preview and the submission will break. -->
+                            <!-- Instead of complaining about my awful regexes, how about you fix them, eh?
+                            And then after you fix my regexes, make sure the correct data from the URL
+                            is being passed to the data properties. Otherwise preview and the submission will break. -->
                             <input type="text" class="form-control" name="credit" placeholder="Link to your repository profile or YouTube channel" 
-                            pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*|[^"\\]*\byoutube.com\b[^"\\]*' aria-label="Credit" maxlength="150" v-model="credit" changes>
+                            pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*|[^"\\]*\byoutube.com\b[^"\\]*' aria-label="Credit" maxlength="150" v-model="credit">
                             <div class="invalid-feedback">
                                 The link must point to a GitHub, GitLab, or BitBucket profile or a YouTube channel.
                             </div>
@@ -63,7 +71,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Video URL</span>
                             <input type="text" class="form-control"
-                            placeholder="YouTube or Vimeo URL" aria-label="Video URL" pattern='[^"\\]*watch\?v=[^"\\]*|[^"\\]*\bvimeo.com/\b[0-9]*' maxlength="150" v-model="url" required changes>
+                            placeholder="YouTube or Vimeo URL" aria-label="Video URL" pattern='[^"\\]*watch\?v=[^"\\]*|[^"\\]*\bvimeo.com/\b[0-9]*' maxlength="150" v-model="url" required>
                             <div class="invalid-feedback">
                                 YouTube links should look like <code>https://www.youtube.com/watch?v=dQw4w9WgXcQ</code> and Vimeo links should look like
                                 <code>https://vimeo.com/148751763</code>
@@ -72,7 +80,7 @@
                         <div class="input-group">
                             <span class="input-group-text">Description</span>
                             <textarea class="form-control" id="description" aria-label="Description" placeholder="Detailed information about the video" 
-                            minlength="20" maxlength="500" v-on:keyup="updateCount()" v-model="description" required changes></textarea>
+                            minlength="20" maxlength="500" v-on:keyup="updateCount()" v-model="description" style="background-image: none !important" required></textarea>
                             <div id="descriptionChars" class="customValidation">Double quotes and backslashes are not allowed.</div>
                             <div class="invalid-feedback">
                                 Please include a description of the video.
@@ -82,11 +90,11 @@
                             <span id="current">0</span>
                             <span id="maximum"> / 500</span>
                         </div>
-                        <p class="mt-3">While optional, we highly encourage including source code!</p>
+                        <!-- <p class="mt-3">While optional, we highly encourage including source code!</p> -->
                         <div class="input-group mb-3">
                             <span class="input-group-text">Source Code (optional)</span>
-                            <input type="text" class="form-control" placeholder="Link to the video code's repository" pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*'
-                             aria-label="Source" maxlength="150" v-model="source" changes>
+                            <input type="text" class="form-control" placeholder="Link to the video code's repository. While optional, we highly encourage including source code!" pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*'
+                             aria-label="Source" maxlength="150" v-model="source">
                             <div class="invalid-feedback">
                                 The link must point to a GitHub, GitLab, or BitBucket repository.
                             </div>
@@ -95,7 +103,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Fields</span>
                             <input type="text" class="form-control" placeholder="Mathematics, Science, Music" aria-label="Fields"
-                            pattern='([^"\\,]){1,20}(, ([^"\\,]){1,20}){0,2}' v-model="fields" required changes>
+                            pattern='([^"\\,]){1,20}(, ([^"\\,]){1,20}){0,2}' v-model="fields" required>
                             <div class="invalid-feedback">
                                 Fields must be no longer than 20 characters, be separated by commas, and cannot contain a <strong>\</strong> or <strong>"</strong>  (Max: 3 fields, Minimum: 1)
                             </div>
@@ -103,7 +111,7 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Subfields</span>
                             <input type="text" class="form-control" placeholder="Group Theory, Cell Theory" aria-label="Subfields"
-                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="subfields" required changes>
+                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="subfields" required>
                             <div class="invalid-feedback">
                                 Subfields must be no longer than 25 characters, be separated by commas, and cannot contain a <strong>\</strong> or <strong>"</strong>  (Max: 3 subfields, Minimum: 1)
                             </div>
@@ -111,39 +119,164 @@
                         <div class="input-group mb-3">
                             <span class="input-group-text">Tags</span>
                             <input type="text" class="form-control" placeholder="Nodes, Trees, Sorting" aria-label="Tags"
-                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="tags" required changes>
+                            pattern='([^"\\,]){1,25}(, ([^"\\,]){1,25}){0,2}' v-model="tags" required>
                             <div class="invalid-feedback">
                                 Tags must be no longer than 25 characters, be separated by commas, and cannot contain a <strong>\</strong> or <strong>"</strong>  (Max: 3 tags, Minimum: 1)
                             </div>
                         </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">Video Language</span>
+                            <select id="languages" class="form-control" v-model="language" style="background-image: none !important">
+                                <option value="af">Afrikaans</option>
+                                <option value="sq">Albanian - shqip</option>
+                                <option value="am">Amharic - አማርኛ</option>
+                                <option value="ar">Arabic - العربية</option>
+                                <option value="an">Aragonese - aragonés</option>
+                                <option value="hy">Armenian - հայերեն</option>
+                                <option value="ast">Asturian - asturianu</option>
+                                <option value="az">Azerbaijani - azərbaycan dili</option>
+                                <option value="eu">Basque - euskara</option>
+                                <option value="be">Belarusian - беларуская</option>
+                                <option value="bn">Bengali - বাংলা</option>
+                                <option value="bs">Bosnian - bosanski</option>
+                                <option value="br">Breton - brezhoneg</option>
+                                <option value="bg">Bulgarian - български</option>
+                                <option value="ca">Catalan - català</option>
+                                <option value="ckb">Central Kurdish - کوردی (دەستنوسی عەرەبی)</option>
+                                <option value="zh-HK">Chinese (Hong Kong) - 中文（香港）</option>
+                                <option value="zh-CN">Chinese (Simplified) - 中文（简体）</option>
+                                <option value="zh-TW">Chinese (Traditional) - 中文（繁體）</option>
+                                <option value="co">Corsican</option>
+                                <option value="hr">Croatian - hrvatski</option>
+                                <option value="cs">Czech - čeština</option>
+                                <option value="da">Danish - dansk</option>
+                                <option value="nl">Dutch - Nederlands</option>
+                                <option value="en" selected="selected">English</option>
+                                <option value="eo">Esperanto - esperanto</option>
+                                <option value="et">Estonian - eesti</option>
+                                <option value="fo">Faroese - føroyskt</option>
+                                <option value="fil">Filipino</option>
+                                <option value="fi">Finnish - suomi</option>
+                                <option value="fr">French - français</option>
+                                <option value="gl">Galician - galego</option>
+                                <option value="ka">Georgian - ქართული</option>
+                                <option value="de">German - Deutsch</option>
+                                <option value="el">Greek - Ελληνικά</option>
+                                <option value="gn">Guarani</option>
+                                <option value="gu">Gujarati - ગુજરાતી</option>
+                                <option value="ha">Hausa</option>
+                                <option value="haw">Hawaiian - ʻŌlelo Hawaiʻi</option>
+                                <option value="he">Hebrew - עברית</option>
+                                <option value="hi">Hindi - हिन्दी</option>
+                                <option value="hu">Hungarian - magyar</option>
+                                <option value="is">Icelandic - íslenska</option>
+                                <option value="id">Indonesian - Indonesia</option>
+                                <option value="ia">Interlingua</option>
+                                <option value="ga">Irish - Gaeilge</option>
+                                <option value="it">Italian - italiano</option>
+                                <option value="ja">Japanese - 日本語</option>
+                                <option value="kn">Kannada - ಕನ್ನಡ</option>
+                                <option value="kk">Kazakh - қазақ тілі</option>
+                                <option value="km">Khmer - ខ្មែរ</option>
+                                <option value="ko">Korean - 한국어</option>
+                                <option value="ku">Kurdish - Kurdî</option>
+                                <option value="ky">Kyrgyz - кыргызча</option>
+                                <option value="lo">Lao - ລາວ</option>
+                                <option value="la">Latin</option>
+                                <option value="lv">Latvian - latviešu</option>
+                                <option value="ln">Lingala - lingála</option>
+                                <option value="lt">Lithuanian - lietuvių</option>
+                                <option value="mk">Macedonian - македонски</option>
+                                <option value="ms">Malay - Bahasa Melayu</option>
+                                <option value="ml">Malayalam - മലയാളം</option>
+                                <option value="mt">Maltese - Malti</option>
+                                <option value="mr">Marathi - मराठी</option>
+                                <option value="mn">Mongolian - монгол</option>
+                                <option value="ne">Nepali - नेपाली</option>
+                                <option value="no">Norwegian - norsk</option>
+                                <option value="oc">Occitan</option>
+                                <option value="or">Oriya - ଓଡ଼ିଆ</option>
+                                <option value="om">Oromo - Oromoo</option>
+                                <option value="ps">Pashto - پښتو</option>
+                                <option value="fa">Persian - فارسی</option>
+                                <option value="pl">Polish - polski</option>
+                                <option value="pt">Portuguese - português</option>
+                                <option value="pa">Punjabi - ਪੰਜਾਬੀ</option>
+                                <option value="qu">Quechua</option>
+                                <option value="ro">Romanian - română</option>
+                                <option value="rm">Romansh - rumantsch</option>
+                                <option value="ru">Russian - русский</option>
+                                <option value="gd">Scottish Gaelic</option>
+                                <option value="sr">Serbian - српски</option>
+                                <option value="sh">Serbo-Croatian - Srpskohrvatski</option>
+                                <option value="sn">Shona - chiShona</option>
+                                <option value="sd">Sindhi</option>
+                                <option value="si">Sinhala - සිංහල</option>
+                                <option value="sk">Slovak - slovenčina</option>
+                                <option value="sl">Slovenian - slovenščina</option>
+                                <option value="so">Somali - Soomaali</option>
+                                <option value="st">Southern Sotho</option>
+                                <option value="es">Spanish - español</option>
+                                <option value="su">Sundanese</option>
+                                <option value="sw">Swahili - Kiswahili</option>
+                                <option value="sv">Swedish - svenska</option>
+                                <option value="tg">Tajik - тоҷикӣ</option>
+                                <option value="ta">Tamil - தமிழ்</option>
+                                <option value="tt">Tatar</option>
+                                <option value="te">Telugu - తెలుగు</option>
+                                <option value="th">Thai - ไทย</option>
+                                <option value="ti">Tigrinya - ትግርኛ</option>
+                                <option value="to">Tongan - lea fakatonga</option>
+                                <option value="tr">Turkish - Türkçe</option>
+                                <option value="tk">Turkmen</option>
+                                <option value="tw">Twi</option>
+                                <option value="uk">Ukrainian - українська</option>
+                                <option value="ur">Urdu - اردو</option>
+                                <option value="ug">Uyghur</option>
+                                <option value="uz">Uzbek - o‘zbek</option>
+                                <option value="vi">Vietnamese - Tiếng Việt</option>
+                                <option value="wa">Walloon - wa</option>
+                                <option value="cy">Welsh - Cymraeg</option>
+                                <option value="fy">Western Frisian</option>
+                                <option value="xh">Xhosa</option>
+                                <option value="yi">Yiddish</option>
+                                <option value="yo">Yoruba - Èdè Yorùbá</option>
+                                <option value="zu">Zulu - isiZulu</option>
+                            </select>
+                            <span class="input-group-text ml-1">Manim Version</span>
+                            <select id="versions" class="form-control" v-model="version" style="background-image: none !important" required>
+                                <option value="" disabled selected>Select the version that rendered this video</option>
+                                <option value="3b1b">3Blue1Brown version</option>
+                            </select>
+                        </div>
                         <div class="form-group mb-3">
                             <input class="form-check-input" type="checkbox" name="checkbox" id="checkbox" required>
                             <label class="form-check-label" for="checkbox">
-                                I am submitting a video that is my own.
+                                I am submitting a video that is my own and understand that all of this information will be publicly available.
                             </label>
                         </div>
                         <div class="modal-footer">
-                            <button type="submit" class="btn btn-primary">Preview</button>
+                            <button type="submit" class="btn">Preview</button>
                         </div>
                     </form>
                 </div>
                 <div class="carousel-item">
                     <div class="container-fluid">
                         <div class="col border p-4 d-flex flex-column position-static m-2">
-                            <manim-video v-if="ready" :videoData="getData()"/>
+                            <manim-video v-if="ready" :videoData="getData(false)"/>
                         </div>
-                        <form class="needs-validation mr-1" novalidate>
+                        <!-- <form class="needs-validation mr-1" novalidate>
                             <div class="form-group mb-3">
                                 <input class="form-check-input" type="checkbox" id="confirm" required>
                                 <label class="form-check-label" for="confirm">
                                     Everything looks good! (Accuracy, Spelling, etc.)
                                 </label>
                             </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-primary" v-on:click="edit()">Edit</button>
-                                <button type="submit" class="btn btn-primary">Submit</button>
-                            </div>
-                        </form>
+                        </form> -->
+                    <div class="modal-footer">
+                        <button type="button" class="btn" v-on:click="edit()">Edit</button>
+                        <button type="submit" class="btn" v-on:click="submit()">Submit</button>
+                    </div>
                     </div>
                 </div>
                 <div class="carousel-item">
@@ -152,9 +285,9 @@
                     </div>
                     <div id="status"></div>
                     <div class="modal-footer">
-                        <button v-if="conflict" type="button" class="btn btn-primary" v-on:click="edit()">Edit</button>
-                        <button v-if="retry && loading == false" type="button" class="btn btn-primary" v-on:click="submit()">Retry</button>
-                        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        <button v-if="conflict" type="button" class="btn" v-on:click="edit()">Edit</button>
+                        <button v-if="retry && loading == false" type="button" class="btn" v-on:click="submit()">Retry</button>
+                        <button type="button" class="btn" data-dismiss="modal">Close</button>
                     </div>
                 </div>
             </div>
@@ -169,7 +302,8 @@
 import ManimVideo from './ManimVideo.vue'
 const RVerify = window.RVerify
 // const bootstrap = window.bootstrap
-import * as bootstrap from 'bootstrap'
+// import * as bootstrap from 'bootstrap'
+import { Modal, Carousel } from 'bootstrap'
 import $ from 'jquery'
 
 export default {
@@ -181,10 +315,21 @@ export default {
       ManimVideo
   },
   created() {
+    // console.log(window.location.toString().includes('code'));
+    fetch('manim-versions.json')
+    .then(response => response.json())
+    .then(versions => {
+        var versionsDropdown = document.getElementById('versions');
+        for(const version of versions){
+            versionsDropdown.options.add(new Option(`Manim Community v${version}`, version, false))
+        }
+    });
+    
     RVerify.configure({
       tolerance: 8,
       duration: 500,
       mask: 0.5,
+      maskClosable: true,
       title: "Upload Your Manim Video - Captcha",
       text: "Use the slider to orient the picture upright",
       album: [
@@ -217,7 +362,7 @@ export default {
             this.tags = ''
             document.getElementsByName('checkbox')[0].checked = false
             document.getElementById('current').textContent = 0
-            new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
+            new Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
         }
     })
 
@@ -232,30 +377,31 @@ export default {
             else{
                 if(form.id == 'form'){
                     self.ready = true;
-                    new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).next()    
-                }else {
+                    new Carousel(document.querySelector('#carousel'), {interval: false}).next()    
+                }/*else {
                     self.submit();
-                }
+                }*/
             }
         }, false)
         })
     
-    Array.prototype.slice.call(document.querySelectorAll('[changes]'))
-        .forEach(function (field) {
-        field.addEventListener('change', () => {
-            if(document.getElementById('confirm').checked)
-                document.getElementById('confirm').checked = false
-        }, false)
-        })
+    // Array.prototype.slice.call(document.querySelectorAll('[changes]'))
+    //     .forEach(function (field) {
+    //     field.addEventListener('change', () => {
+    //         if(document.getElementById('confirm').checked)
+    //             document.getElementById('confirm').checked = false
+    //     }, false)
+    //     })
   },
   data() {
     return {
         // Setting "disabled" to true will turn off the submission form after a redeploy. This is a safety feature! Don't remove.
-        disabled: true,
+        disabled: false,
         github_url: '',
         colors: ["#81b29a", "#454866", "#e07a5f"],
         title: '',
         author: '',
+        gh_user: '',
         credit: '',
         url: '',
         description: '',
@@ -263,6 +409,8 @@ export default {
         fields: '',
         subfields: '',
         tags: '',
+        language: 'en',
+        version: '',
         status: '',
         loading: true,
         ready: false,
@@ -272,12 +420,12 @@ export default {
     }
   },
   updated() {
-    this.modal = new bootstrap.Modal(document.getElementById('submissionModal'))
+    this.modal = new Modal(document.getElementById('submissionModal'))
     if(!this.disabled){
         if(this.$parent.clicked == true)
             this.captcha()
     }else{
-        new bootstrap.Modal(document.getElementById('disabledModal')).show();
+        new Modal(document.getElementById('disabledModal')).show();
         this.$parent.clicked = false
     }
     $('[data-toggle="popover"]').popover({trigger:'hover'})
@@ -294,19 +442,27 @@ export default {
         }
       });
     },
-    getData() {
-        return [
-            new Date().toISOString().substring(0, 10),
-            this.title.trim(),
-            this.author.trim(),
-            this.credit.trim(),
-            this.handleURL().trim(),
-            this.description.trim(),
-            this.source.trim(),
-            this.fields.trim().split(', '),
-            this.subfields.trim().split(', '),
-            this.tags.trim().split(', ')
-        ]
+    getData(keys) {
+        var JSONData = {
+            "date": new Date().toISOString().substring(0, 10),
+            "state": "submitted",
+            "title": this.title.trim(),
+            "author": this.author.trim(),
+            "github_user": this.gh_user.trim(),
+            "credit": this.credit.trim(),
+            "video_url": this.handleURL().trim(),
+            "description": this.description.trim(),
+            "source": this.source.trim(),
+            "fields": this.fields.trim().split(', '),
+            "subfields": this.subfields.trim().split(', '),
+            "tags": this.tags.trim().split(', '),
+            "language": this.language.trim(),
+            "version": this.version.trim()
+        }
+        if(keys)
+            return JSONData
+        else
+            return Object.values(JSONData)
     },
     handleURL() {
         if(this.url.includes('='))
@@ -319,29 +475,17 @@ export default {
     },
     edit() {
         this.conflict = false;
-        new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
+        new Carousel(document.querySelector('#carousel'), {interval: false}).to(0)
     },
     async submit() {
-        var JSONData = {
-            "date": new Date().toISOString().substring(0, 10),
-            "title": this.title.trim(),
-            "author": this.author.trim(),
-            "credit": this.credit.trim(),
-            "video_url": this.handleURL().trim(),
-            "description": this.description.trim(),
-            "source": this.source.trim(),
-            "fields": this.fields.trim().split(', '),
-            "subfields": this.subfields.trim().split(', '),
-            "tags": this.tags.trim().split(', ')
-        }
         let html;
         this.loading = true;
         document.getElementById('status').innerHTML = '';
-        new bootstrap.Carousel(document.querySelector('#carousel'), {interval: false}).to(2)
+        new Carousel(document.querySelector('#carousel'), {interval: false}).to(2)
 
         const response = await fetch('https://showcase.manim.workers.dev/', {
             method: 'POST',
-            body: JSON.stringify(JSONData)
+            body: JSON.stringify(this.getData(true))
         }).catch((error) => {
             this.loading = false;
             this.retry = true;
@@ -363,6 +507,7 @@ export default {
                 html = `<p style="font-size: 18px;font-family: Garamond, serif;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.url}"> You can view your submission here.</a> If your video does not appear on the Showcase after a while, changes may have been requested <a href="${data.url}"> here.</a> </p>`
                 document.getElementById('status').innerHTML = html;
                 this.submitted = true;
+                document.getElementById('form').classList.remove('was-validated')
             })
         }
     }
@@ -373,6 +518,18 @@ export default {
 <style scoped>
 .modal-header {
     align-items: center
+}
+
+.input-group-text {
+    color: white !important;
+    background-color: #81b29a !important;
+    border: 1px solid #81b29a !important;
+}
+
+.btn {
+    color: white;
+    background-color: #e07a5f;
+    border-color: #e07a5f;
 }
 
 .customValidation {

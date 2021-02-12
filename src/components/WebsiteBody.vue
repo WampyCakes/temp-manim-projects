@@ -61,8 +61,8 @@ export default {
   },
   name: 'WebsiteBody',
   created() {
-    // submissions.json is the file which holds all approved Manim videos. 
-    fetch('submissions.json')
+    // videos.json is the file which holds all approved Manim videos. 
+    fetch('videos.json')
       .then(response => response.json())
       .then(json => {
         // We only want to actually load in as many as we need for a page. Lazy.js documentation provides more information

@@ -1,4 +1,4 @@
-# When closing an issue with both the 'submission' and 'submission approved' labels, this adds the video to the master submissions.json list.
+# When closing an issue with both the 'video' and 'submission approved' labels, this adds the video to the master videos.json list.
 name: Add Approved Video
 
 on:
@@ -7,7 +7,7 @@ on:
 
 jobs:
   add:
-    if: contains(github.event.issue.labels.*.name, 'submission') && contains(github.event.issue.labels.*.name, 'submission approved')
+    if: contains(github.event.issue.labels.*.name, 'video') && contains(github.event.issue.labels.*.name, 'submission approved')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -19,13 +19,13 @@ jobs:
           # add-video.js requires @octokit/request
           npm i @octokit/request
           
-          # Run the add-video.js script to update submissions.json; requires the issue number of the issue closed and the repo name
+          # Run the add-video.js script to update videos.json; requires the issue number of the issue closed and the repo name
           # to get the body contents of the issue
           node ./scripts/add-video.js "${{ github.event.issue.number }}" "${{ github.repository }}"
 
-          # Commit the updated submissions.json
+          # Commit the updated videos.json
           git config user.name github-actions
           git config user.email github-actions@github.com
-          git add "submissions.json"
-          git commit -m "Automatically added a video to submissions.json"
+          git add "videos.json"
+          git commit -m "Automatically added a video to videos.json"
           git push origin new-main

@@ -15,12 +15,16 @@ if(new Date().getHours() == 0){
             });
 
             response.on('end', () => {
-                fs.writeFileSync('manim-versions.json', JSON.stringify(Object.keys(JSON.parse(data).releases).reverse()));
-                console.log(scriptName+' - Wrote the manim-versions.json file.');
+                try {
+                    fs.writeFileSync('manim-versions.json', JSON.stringify(Object.keys(JSON.parse(data).releases).reverse()));    
+                    console.log(scriptName+' - Wrote the manim-versions.json file.');
+                } catch (error) {
+                    console.log(scriptName+' - '+error);
+                }
             })
         })       
     } catch (error) {
-        console.log(error);    
+        console.log(scriptName+' - '+error);
     }
 }else {
     console.log(scriptName+' - Not checking PyPi at this hour.');

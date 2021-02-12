@@ -5,19 +5,23 @@
     integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
     crossorigin="anonymous"
   /> -->
-  <navbar/>
+  <website-header/>
   <website-body/>
+  <website-footer/>
 </template>
 
 <script>
+import WebsiteHeader from './components/WebsiteHeader.vue'
 import WebsiteBody from './components/WebsiteBody.vue'
-import Navbar from './components/Navbar.vue'
+import WebsiteFooter from './components/WebsiteFooter.vue'
 
 export default {
   name: 'App',
   components: {
+    WebsiteHeader,
     WebsiteBody,
-    Navbar
+    WebsiteFooter
+  },
   }
 }
 </script>
