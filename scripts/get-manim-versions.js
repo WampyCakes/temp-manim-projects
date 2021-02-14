@@ -4,7 +4,7 @@ const path =  require('path');
 
 var scriptName = path.basename(__filename)
 
-if(new Date().getHours() == 0){
+if(new Date().getHours() == 0 || process.argv[2] == true){
     try {
         console.log(scriptName+' - Checking PyPi for Manim releases.');
         https.get('https://pypi.org/pypi/manim/json', (response) => {
