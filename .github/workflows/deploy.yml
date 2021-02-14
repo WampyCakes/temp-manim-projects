@@ -67,7 +67,7 @@ jobs:
           git checkout gh-pages
           git checkout new-main videos.json
           git checkout new-main scripts/get-manim-versions.js
-          node ./scripts/get-manim-versions.js true
+          node ./scripts/get-manim-versions.js "true"
           git reset -- scripts
           git add videos.json
           git add manim-versions.json
