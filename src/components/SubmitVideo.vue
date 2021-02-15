@@ -30,24 +30,24 @@
                 </button>
               </div>
               <div class="modal-body">
-                <p class="login-p">
+                <p class="stylized-p">
                   In order to submit your work to the Manim Showcase, you must
                   login with GitHub. This enables us to run the Showcase as a
                   small community-maintained project with the user features
                   you'd expect.
-                  <strong class="login-p"
+                  <strong class="stylized-p"
                     >You will not be required to login until after you have
                     filled out the submission form.</strong
                   >
                 </p>
-                <p class="login-p">
+                <p class="stylized-p">
                   When authorizing the Manim Showcase to act on behalf of your
                   GitHub account, we ask for the most restrictive permissions we
                   can. GitHub's most restrictive permission set grants broader
                   access than we will ever use. We will never touch your
                   repositories or store information from GitHub outside what is
                   required for the OAuth flow,
-                  <strong class="login-p">ever.</strong> The only action we will
+                  <strong class="stylized-p">ever.</strong> The only action we will
                   take for you is interacting with the official Manim Showcase
                   repository. If you would like to revoke access after
                   submitting your work,
@@ -56,7 +56,7 @@
                     >you may do so here.</a
                   >
                 </p>
-                <p class="login-p">We appreciate your understanding.</p>
+                <p class="stylized-p">We appreciate your understanding.</p>
                 <div class="modal-footer">
                   <button type="button" class="btn" data-dismiss="modal">
                     Close
@@ -122,7 +122,7 @@
                       <strong>\</strong> or <strong>"</strong>.
                     </div>
                   </div>
-                  <div class="input-group mb-3">
+                  <!-- <div class="input-group mb-3">
                     <span class="input-group-text"
                       >GitHub username (optional)</span
                     >
@@ -136,12 +136,9 @@
                       placeholder="Your GitHub username is required to edit this video in the future"
                     />
                     <div class="invalid-feedback">invalid github usernmae</div>
-                  </div>
-                  <div class="input-group mb-3">
+                  </div> -->
+                  <!-- <div class="input-group mb-3">
                     <span class="input-group-text">Credit (optional)</span>
-                    <!-- Instead of complaining about my awful regexes, how about you fix them, eh?
-                            And then after you fix my regexes, make sure the correct data from the URL
-                            is being passed to the data properties. Otherwise preview and the submission will break. -->
                     <input
                       type="text"
                       class="form-control"
@@ -156,8 +153,25 @@
                       The link must point to a GitHub, GitLab, or BitBucket
                       profile or a YouTube channel.
                     </div>
+                  </div> -->
+                  <div class="form-group mb-3">
+                    <input
+                      class="form-check-input"
+                      style="height: 18px;"
+                      type="checkbox"
+                      name="credit"
+                      id="credit"
+                      v-model="credit"
+                      checked
+                    />
+                    <label class="form-check-label" for="credit">
+                      Display a link to my GitHub profile
+                    </label>
                   </div>
                   <div class="input-group mb-3">
+                    <!-- Instead of complaining about my awful regexes, how about you fix them, eh?
+                    And then after you fix my regexes, make sure the correct data from the URL
+                    is being passed to the data properties. Otherwise preview and the submission will break. -->
                     <span class="input-group-text">Video URL</span>
                     <input
                       type="text"
@@ -207,7 +221,7 @@
                     <input
                       type="text"
                       class="form-control"
-                      placeholder="Link to the video code's repository. While optional, we highly encourage including source code!"
+                      placeholder="While optional, we highly encourage including a link to source code!"
                       pattern='[^"\\]*\bgithub.com\b[^"\\]*|[^"\\]*\bgitlab.com\b[^"\\]*|[^"\\]*\bbitbucket.org\b[^"\\]*'
                       aria-label="Source"
                       maxlength="150"
@@ -218,7 +232,7 @@
                       repository.
                     </div>
                   </div>
-                  <p>
+                  <p class="stylized-p">
                     Fields, Subfields, and Tags should provide terse, relevant
                     information about the video that will help people sort Manim
                     videos by their specific interests.
@@ -426,12 +440,13 @@
                   <div class="form-group mb-3">
                     <input
                       class="form-check-input"
+                      style="height: 18px;"
                       type="checkbox"
                       name="checkbox"
                       id="checkbox"
                       required
                     />
-                    <label class="form-check-label" for="checkbox">
+                    <label class="form-check-label text-left" for="checkbox">
                       I am submitting a video that is my own and understand that
                       all of this information will be publicly available.
                     </label>
@@ -659,8 +674,8 @@ export default {
       colors: ["#81b29a", "#454866", "#e07a5f"],
       title: "",
       author: "",
-      gh_user: "",
-      credit: "",
+      // gh_user: "",
+      credit: true,
       url: "",
       description: "",
       source: "",
@@ -707,7 +722,7 @@ export default {
         state: "unreviewed",
         title: this.title.trim(),
         author: this.author.trim(),
-        github_user: this.gh_user.trim(),
+        // github_user: this.gh_user.trim(),
         credit: this.credit.trim(),
         video_url: this.handleURL().trim(),
         description: this.description.trim(),
@@ -802,6 +817,14 @@ export default {
   align-items: center;
 }
 
+.form-check-input {
+  margin-left: auto;
+}
+
+.form-check-label {
+  margin-left: 1.25rem;
+}
+
 .input-group-text {
   color: white !important;
   background-color: #343a40 !important;
@@ -827,7 +850,7 @@ export default {
   float: right;
 }
 
-.login-p {
+.stylized-p {
   font-size: 18px;
   font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
 }

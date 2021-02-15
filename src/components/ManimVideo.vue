@@ -118,7 +118,8 @@ export default {
 .title {
   font-size: 20px;
   color: #000;
-  font-family: "Courier New", monospace;
+  font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+  /* font-family: "Courier New", monospace; */
 }
 
 .description {
