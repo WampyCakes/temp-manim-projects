@@ -804,8 +804,9 @@ export default {
 
 .input-group-text {
   color: white !important;
-  background-color: #81b29a !important;
-  border: 1px solid #81b29a !important;
+  background-color: #343a40 !important;
+  border: 1px solid #343a40 !important;
+  border-radius: 0;
 }
 
 .btn {
