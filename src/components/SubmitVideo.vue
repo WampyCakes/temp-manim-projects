@@ -723,7 +723,7 @@ export default {
         title: this.title.trim(),
         author: this.author.trim(),
         // github_user: this.gh_user.trim(),
-        credit: this.credit.trim(),
+        credit: this.credit,
         video_url: this.handleURL().trim(),
         description: this.description.trim(),
         source: this.source.trim(),

@@ -3,12 +3,12 @@
   for each element in the list div -->
   <div class="container-fluid pl-0 pr-0">
     <strong
-      v-for="tag in videoData[11]"
+      v-for="tag in videoData[10]"
       v-bind:key="tag"
       class="tags"
       v-bind:style="{
-        background: colors[videoData[11].indexOf(tag)],
-        borderColor: colors[videoData[11].indexOf(tag)],
+        background: colors[videoData[10].indexOf(tag)],
+        borderColor: colors[videoData[10].indexOf(tag)],
       }"
     >
       {{ tag }}
@@ -24,19 +24,22 @@
     >By
     <!-- This should never happen, but just in case. -->
     <p class="d-inline" v-if="videoData[3] == ''">Anonymous</p>
-    <a v-bind:href="videoData[5].length == 0 ? '//:0' : videoData[5]">{{
+    {{
       videoData[3]
-    }}</a></strong
-  >
+    }}</strong>
+    <!-- <a v-bind:href="videoData[5].length == 0 ? '//:0' : videoData[5]">{{
+      videoData[3]
+    }}</a></strong> -->
+  
   <div class="embed-responsive embed-responsive-16by9">
     <iframe
       class="embed-responsive-item"
-      v-bind:src="videoData[6]"
+      v-bind:src="videoData[5]"
       allowfullscreen
     ></iframe>
   </div>
-  <p class="description mb-auto py-3 text-center">{{ videoData[7] }}</p>
-  <strong class="text-right">Made with {{ videoData[13] == '3b1b' ? "3Blue1Brown's Manim" : "ManimCommunity v"+videoData[13]}}</strong>
+  <p class="description mb-auto py-3 text-center">{{ videoData[6] }}</p>
+  <strong class="text-right">Made with {{ videoData[12] == '3b1b' ? "3Blue1Brown's Manim" : "ManimCommunity v"+videoData[12]}}</strong>
   <div>
     <!-- .hover-card can optionally be added to the Fields <p>. It was removed because increasing the size slightly jerks the popover farther to the right -->
     <!-- This should never happen, but just in case, include a message for no subfields -->
@@ -47,14 +50,14 @@
       data-placement="right"
       title="Subfields"
       v-bind:data-content="[
-        videoData[10].length == 0
+        videoData[9].length == 0
           ? 'No subfields listed'
-          : videoData[10].join(', '),
+          : videoData[9].join(', '),
       ]"
     >
-      Fields: {{ videoData[9].join(", ") }} ❯
+      Fields: {{ videoData[8].join(", ") }} ❯
     </p>
-    <a class="" v-if="videoData[8] !== ''" v-bind:href="videoData[8]">
+    <a class="" v-if="videoData[7] !== ''" v-bind:href="videoData[7]">
       <button
         type="button"
         class="source btn btn-outline-light hover-card mt-3"
