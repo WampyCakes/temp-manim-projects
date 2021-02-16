@@ -1,17 +1,16 @@
 [
     [
-      "2021-01-13",
+      "2021-02-16",
       "unreviewed",
-      "A Visual Representation of Integration By Parts",
-      "byyytes",
-      "",
-      "https://www.youtube.com/channel/UCTLYbIZxyKFBT93YtIgvtEg",
+      "Title",
+      "Author",
+      true,
       "https://www.youtube.com/embed/73E1rrZ2SqI",
-      "A visual explanation of Integration By Parts. I chose to make a video on IBP because it's the thing from calculus class I never understood that shows up most often. I sat down with the formula for a bit, and cranked out a nice visual explanation. The video took much longer.",
+      "aaaaaaaaaaaaaaaaaaaaaaa",
       "",
-      ["Mathematics"],
-      ["Calculus"],
-      ["Integration", "Integration By Parts"],
+      ["F"],
+      ["S"],
+      ["T", "T2"],
       "en",
       "0.1.1"
     ]
