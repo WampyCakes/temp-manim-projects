@@ -190,7 +190,7 @@ export default {
   data() {
     return {
       // Setting "disabled" to true will turn off the submission form after a redeploy. This is a safety feature! Don't remove.
-      disabled: false,
+      disabled: true,
       submissionForm: false,
       login_url: ''
       // clicked: false,
