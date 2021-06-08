@@ -1,5 +1,5 @@
 <template>
-    <footer class="bg-dark mt-4">
+    <footer class="bg-dark">
        <div class="container">
          <p>ManimCommunity takes no responsibility for, is not affiliated with, and does not endorse any user-submitted content on this website (including, but not limited to, video content and linked source code).</p> 
           <a
@@ -31,9 +31,11 @@ export default {
 }
 
 footer {
+    margin-top: 3.5rem;
     padding: 1.5rem;
     bottom: 0;
     width: 100%;
+    /* position: absolute; */
 }
 
 p {

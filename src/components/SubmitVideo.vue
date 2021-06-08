@@ -7,7 +7,7 @@
     aria-labelledby="submissionModal"
     aria-hidden="true"
   >
-    <div class="modal-dialog modal-xl">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div id="carousel" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
@@ -47,9 +47,9 @@
                   access than we will ever use. We will never touch your
                   repositories or store information from GitHub outside what is
                   required for the OAuth flow,
-                  <strong class="stylized-p">ever.</strong> The only action we will
-                  take for you is interacting with the official Manim Showcase
-                  repository. If you would like to revoke access after
+                  <strong class="stylized-p">ever.</strong> The only action we
+                  will take for you is interacting with the official Manim
+                  Showcase repository. If you would like to revoke access after
                   submitting your work,
                   <a
                     href="https://github.com/settings/connections/applications/84d5919b313ea4acaf44"
@@ -157,7 +157,7 @@
                   <div class="form-group mb-3">
                     <input
                       class="form-check-input"
-                      style="height: 18px;"
+                      style="height: 18px"
                       type="checkbox"
                       name="credit"
                       id="credit"
@@ -172,13 +172,15 @@
                     <!-- Instead of complaining about my awful regexes, how about you fix them, eh?
                     And then after you fix my regexes, make sure the correct data from the URL
                     is being passed to the data properties. Otherwise preview and the submission will break. -->
+                    <!-- Older, crappier regex [^"\\]*watch\?v=[^"\\]*|[^"\\]*\bvimeo.com/\b[0-9]* -->
+                    <!-- https://regex101.com/r/ymwi2n/1 -->
                     <span class="input-group-text">Video URL</span>
                     <input
                       type="text"
                       class="form-control"
                       placeholder="YouTube or Vimeo URL"
                       aria-label="Video URL"
-                      pattern='[^"\\]*watch\?v=[^"\\]*|[^"\\]*\bvimeo.com/\b[0-9]*'
+                      pattern='^(?:https:\/\/)(?:www\.)?(?:youtube\.com\/watch\?v=([^&\n]+)|vimeo.com\/([a-zA-Z\d]+))$'
                       maxlength="150"
                       v-model="url"
                       required
@@ -440,7 +442,7 @@
                   <div class="form-group mb-3">
                     <input
                       class="form-check-input"
-                      style="height: 18px;"
+                      style="height: 18px"
                       type="checkbox"
                       name="checkbox"
                       id="checkbox"
@@ -480,7 +482,7 @@
                   <div
                     class="col border p-4 d-flex flex-column position-static m-2"
                   >
-                    <manim-video v-if="ready" :videoData="getData(false)" />
+                    <manim-video v-if="ready" :videoData="getData(false)" :showVersionModal="false"/>
                   </div>
                   <!-- <form class="needs-validation mr-1" novalidate>
                             <div class="form-group mb-3">
@@ -496,7 +498,7 @@
                     Edit
                   </button>
                   <button type="submit" class="btn" v-on:click="submit()">
-                    <i class="icon-github"></i> Login with GitHub and Submit
+                    <i class="icon-github"></i> Submit
                   </button>
                 </div>
               </div>
@@ -559,7 +561,7 @@
 <script>
 import ManimVideo from "./ManimVideo.vue";
 const RVerify = window.RVerify;
-const crypto = require('crypto')
+const crypto = require("crypto");
 // const bootstrap = window.bootstrap
 // import * as bootstrap from 'bootstrap'
 import { Modal, Carousel } from "bootstrap";
@@ -567,11 +569,22 @@ import $ from "jquery";
 
 export default {
   name: "SubmitVideo",
-  //   props: {
-  //       authCode: String
-  //   },
+  props: {
+    showForm: { Boolean, required: true },
+
+    // formData: Object
+    // authCode: String
+  },
   components: {
     ManimVideo,
+  },
+  watch: {
+    showForm: function (newValue) {
+      if (newValue == true) {
+        this.modal = new Modal(document.getElementById("submissionModal"));
+        this.modal.show();
+      }
+    },
   },
   created() {
     // console.log(window.location.toString().includes('code'));
@@ -613,7 +626,10 @@ export default {
     });
 
     // Reset most form values on submission so that you can submit another video
+    // For some reason jquery seems to be necessary for this event to be caught..
     $(document).on("hidden.bs.modal", "#submissionModal", () => {
+      // Makes it possible to open the modal again after it's been closed.
+      this.$parent.submissionForm = false;
       if (this.submitted) {
         this.title = "";
         this.url = "";
@@ -622,14 +638,13 @@ export default {
         this.fields = "";
         this.subfields = "";
         this.tags = "";
+        this.version = "";
         document.getElementsByName("checkbox")[0].checked = false;
         document.getElementById("current").textContent = 0;
         new Carousel(document.querySelector("#carousel"), {
           interval: false,
         }).to(0);
       }
-      // Makes it possible to open the modal again after it's been closed.
-      this.$parent.submissionForm = false;
     });
 
     var self = this;
@@ -657,8 +672,9 @@ export default {
         );
       });
 
-    this.modal = new Modal(document.getElementById("submissionModal"));
-    this.modal.show();
+    // document.getElementById('form').addEventListener('change', () => {
+    //   this.$parent.formData = this.getData(true);//$emit('formUpdate', this.getData(true));
+    // })
 
     // Array.prototype.slice.call(document.querySelectorAll('[changes]'))
     //     .forEach(function (field) {
@@ -755,64 +771,158 @@ export default {
     edit() {
       this.conflict = false;
       new Carousel(document.querySelector("#carousel"), { interval: false }).to(
-        0
+        1
       );
     },
     async submit() {
-      //   let html;
+      let html;
       this.loading = true;
-    //   document.getElementById("status").innerHTML = "";
-    //   new Carousel(document.querySelector("#carousel"), { interval: false }).to(
-    //     2
-    //   );
-        var self = this;
+        document.getElementById("status").innerHTML = "";
+        new Carousel(document.querySelector("#carousel"), { interval: false }).to(
+          3
+        );
+      var self = this;
       this.modal.hide();
       RVerify.action(function (result) {
         if (result == 1) {
-          setTimeout(() => {
-            let state = encodeURIComponent(
-              crypto.randomBytes(16).toString('base64')
-            );
-            sessionStorage.setItem('state', state);
-            sessionStorage.setItem('data', JSON.stringify(self.getData(true)));
-            window.location.replace(`https://github.com/login/oauth/authorize?client_id=84d5919b313ea4acaf44&scope=public_repo&state=${encodeURIComponent(state)}`);
+          setTimeout(async () => {
+            self.modal.show();
+            const response = await fetch("https://showcase.manim.workers.dev/", {
+              method: "POST",
+              body: JSON.stringify(self.getData(true)),
+              credentials: 'include'
+            }).catch((error) => {
+              self.loading = false;
+              document.getElementById("status").style.display = "unset";
+              self.retry = true;
+              html = `<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">It appears that there was an error while sending your video submission. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${self.github_url}"> GitHub repository.</a> The error has been logged to your browser console.</p>`;
+              document.getElementById("status").innerHTML = html;
+              console.error("Submission Error:", error);
+            });
+            self.loading = false;
+            document.getElementById("status").style.display = "unset";
+            if (response.status == 409) {
+              self.conflict = true;
+              html =
+                '<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">Oh no! There is already a video with the same title by the same author. Please adjust.</p>';
+              document.getElementById("status").innerHTML = html;
+            } else if (response.status == 400){
+                response.json().then((data) => {
+                  if(data.extraInfo == "Taken"){
+                    html = `<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">Oh no! It appears this author name is taken already. Please adjust.</p>`;
+                  }else{
+                    html = `<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">Oh no! It appears you have used a different author name in the past. Please change it to the one you used previously (${data.extraInfo}).</p>`;
+                  }
+                  self.conflict = true;
+                  self.retry = false;
+                  document.getElementById("status").innerHTML = html;
+                });
+            } else if (response.status == 500) {
+              response.json().then((data) => {
+                if(data.extraInfo == 'Login'){
+                  self.modal.hide();
+                  RVerify.configure({
+                    tolerance: 8,
+                    duration: 500,
+                    mask: 0.5,
+                    maskClosable: true,
+                    title: "Upload Your Manim Video - Captcha",
+                    text: "Use the slider to orient the picture upright",
+                    album: [
+                      "tiger.jpg",
+                      "eagle.jpg",
+                      "gosling.jpg",
+                      "kitten.jpg",
+                      "wolf.jpg",
+                      "bird.jpg",
+                    ],
+                  });
+
+                  RVerify.action(function (result) {
+                    if (result == 1) {
+                      setTimeout(() => {
+                        let state = encodeURIComponent(
+                          crypto.randomBytes(16).toString("base64")
+                        );
+                        sessionStorage.setItem("state", state);
+                        sessionStorage.setItem("data", JSON.stringify(self.getData(true)));
+                        window.location.replace(
+                          `https://github.com/login/oauth/authorize?client_id=84d5919b313ea4acaf44&scope=public_repo&state=${encodeURIComponent(
+                            state
+                          )}`
+                        );
+                      }, 500);
+                    }
+                  });
+                }else if(data.extraInfo == 'Unavailable'){
+                  html = `<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">It appears that GitHub was down when we made our request. You may try resubmitting your video in a little while.</a></p>`;
+                  document.getElementById("status").innerHTML = html;
+                }else{
+                  html = `<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">It appears that we had an internal error while trying to submit your video. The error has been logged for troubleshooting. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${self.github_url}"> GitHub repository.</a></p>`;
+                  document.getElementById("status").innerHTML = html;
+                }
+              });
+              self.retry = true;
+            } else if (response.status == 200) {
+              response.json().then((data) => {
+                html = `<p style="font-size: 18px;font-family: Garamond, serif; margin-bottom: 0;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.extraInfo}"> You can view your submission here.</a> If your video does not appear on the Showcase after a while, changes may have been requested <a href="${data.extraInfo}"> here.</a> </p>`;
+                document.getElementById("status").innerHTML = html;
+                self.submitted = true;
+                document.getElementById("form").classList.remove("was-validated");
+              });
+            }
+            // let state = encodeURIComponent(
+            //   crypto.randomBytes(16).toString("base64")
+            // );
+            // sessionStorage.setItem("state", state);
+            // sessionStorage.setItem("data", JSON.stringify(self.getData(true)));
+            // window.location.replace(
+            //   `https://github.com/login/oauth/authorize?client_id=84d5919b313ea4acaf44&scope=public_repo&state=${encodeURIComponent(
+            //     state
+            //   )}`
+            // );
           }, 500);
         }
       });
-        // const response = await fetch("https://showcase.manim.workers.dev/", {
-        //   method: "POST",
-        //   body: JSON.stringify(this.getData(true)),
-        // }).catch((error) => {
-        //   this.loading = false;
-        //   this.retry = true;
-        //   html = `<p style="font-size: 18px;font-family: Garamond, serif;">It appears that there was an error while sending your video submission. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${this.github_url}"> GitHub repository.</a> The error has been logged to your browser console.</p>`;
-        //   document.getElementById("status").innerHTML = html;
-        //   console.error("Submission Error:", error);
-        // });
-        // this.loading = false;
-        // if (response.status == 409) {
-        //   this.conflict = true;
-        //   html =
-        //     '<p style="font-size: 18px;font-family: Garamond, serif;">Oh no! There is already a video with the same title by the same author. Please adjust.</p>';
-        //   document.getElementById("status").innerHTML = html;
-        // } else if (response.status == 500) {
-        //   html = `<p style="font-size: 18px;font-family: Garamond, serif;">It appears that we had an internal error while trying to submit your video. The error has been logged for troubleshooting. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${this.github_url}"> GitHub repository.</a></p>`;
-        //   document.getElementById("status").innerHTML = html;
-        //   this.retry = true;
-        // } else if (response.status == 200) {
-        //   response.json().then((data) => {
-        //     html = `<p style="font-size: 18px;font-family: Garamond, serif;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.url}"> You can view your submission here.</a> If your video does not appear on the Showcase after a while, changes may have been requested <a href="${data.url}"> here.</a> </p>`;
-        //     document.getElementById("status").innerHTML = html;
-        //     this.submitted = true;
-        //     document.getElementById("form").classList.remove("was-validated");
-        //   });
-        // }
+      // const response = await fetch("https://showcase.manim.workers.dev/", {
+      //   method: "POST",
+      //   body: JSON.stringify(this.getData(true)),
+      // }).catch((error) => {
+      //   this.loading = false;
+      //   this.retry = true;
+      //   html = `<p style="font-size: 18px;font-family: Garamond, serif;">It appears that there was an error while sending your video submission. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${this.github_url}"> GitHub repository.</a> The error has been logged to your browser console.</p>`;
+      //   document.getElementById("status").innerHTML = html;
+      //   console.error("Submission Error:", error);
+      // });
+      // this.loading = false;
+      // if (response.status == 409) {
+      //   this.conflict = true;
+      //   html =
+      //     '<p style="font-size: 18px;font-family: Garamond, serif;">Oh no! There is already a video with the same title by the same author. Please adjust.</p>';
+      //   document.getElementById("status").innerHTML = html;
+      // } else if (response.status == 500) {
+      //   html = `<p style="font-size: 18px;font-family: Garamond, serif;">It appears that we had an internal error while trying to submit your video. The error has been logged for troubleshooting. You may try resubmitting your video in a little while or you can submit an issue on our <a href="${this.github_url}"> GitHub repository.</a></p>`;
+      //   document.getElementById("status").innerHTML = html;
+      //   this.retry = true;
+      // } else if (response.status == 200) {
+      //   response.json().then((data) => {
+      //     html = `<p style="font-size: 18px;font-family: Garamond, serif;">Thank you for submitting your Manim video! Once it has been approved, your video will appear on the Manim Showcase within 6 hours. <a href="${data.url}"> You can view your submission here.</a> If your video does not appear on the Showcase after a while, changes may have been requested <a href="${data.url}"> here.</a> </p>`;
+      //     document.getElementById("status").innerHTML = html;
+      //     this.submitted = true;
+      //     document.getElementById("form").classList.remove("was-validated");
+      //   });
+      // }
     },
   },
 };
 </script>
 
 <style scoped>
+#status {
+  display: none;
+  padding: 1rem;
+}
+
 .modal-header {
   align-items: center;
 }

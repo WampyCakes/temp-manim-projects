@@ -3,4 +3,12 @@ import App from './App.vue'
 import 'bootstrap';
 import './assets/main.css'
 
-createApp(App).mount('#app')
+let app = createApp(App/*, {
+    data() {
+        return {
+            formData: {}
+        }
+    }
+}*/)
+app.config.globalProperties.test = 'woo';
+app.mount('#app')

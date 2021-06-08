@@ -24,13 +24,12 @@
     >By
     <!-- This should never happen, but just in case. -->
     <p class="d-inline" v-if="videoData[3] == ''">Anonymous</p>
-    {{
-      videoData[3]
-    }}</strong>
-    <!-- <a v-bind:href="videoData[5].length == 0 ? '//:0' : videoData[5]">{{
+    {{ videoData[3] }}</strong
+  >
+  <!-- <a v-bind:href="videoData[5].length == 0 ? '//:0' : videoData[5]">{{
       videoData[3]
     }}</a></strong> -->
-  
+
   <div class="embed-responsive embed-responsive-16by9">
     <iframe
       class="embed-responsive-item"
@@ -39,7 +38,19 @@
     ></iframe>
   </div>
   <p class="description mb-auto py-3 text-center">{{ videoData[6] }}</p>
-  <strong class="text-right">Made with {{ videoData[12] == '3b1b' ? "3Blue1Brown's Manim" : "ManimCommunity v"+videoData[12]}}</strong>
+  <div class="text-right">
+    <strong class="text-right">Made with </strong>
+    <a href="//:0" v-on:click="versionClick()" v-if="showVersionModal"><strong>{{
+      videoData[12] == "3b1b"
+        ? "3Blue1Brown's Manim"
+        : "ManimCommunity v" + videoData[12]
+    }}</strong></a>
+    <strong v-else>{{
+      videoData[12] == "3b1b"
+        ? "3Blue1Brown's Manim"
+        : "ManimCommunity v" + videoData[12]
+    }}</strong>
+  </div>
   <div>
     <!-- .hover-card can optionally be added to the Fields <p>. It was removed because increasing the size slightly jerks the popover farther to the right -->
     <!-- This should never happen, but just in case, include a message for no subfields -->
@@ -72,27 +83,43 @@
       </button>
     </a>
   </div>
+  <manim-version-modal
+    v-if="versionClicked && showVersionModal"
+    :version="videoData[12]"
+  ></manim-version-modal>
 </template>
 
 <script>
 import $ from "jquery";
+import ManimVersionModal from "./ManimVersionModal.vue";
+
 export default {
   name: "ManimVideo",
+  components: {
+    ManimVersionModal,
+  },
   props: {
     /* Takes in videoData as an Array, this Array is just the values of the JSON originally used to submit the video.
     Values were removed from keys to save space in the videos.json file by the insertion process.
     They should always appear in the same order, hence why we reference the values above using indices.
     If testing, you can console.log videoData */
     videoData: Array,
+    showVersionModal: { Boolean, default: true },
   },
   updated() {
     // Subfields are shown on a Bootstrap popover which needs enabled.
     $('[data-toggle="popover"]').popover({ trigger: "hover" });
   },
+  methods: {
+    versionClick() {
+      this.versionClicked = true;
+    },
+  },
   data() {
     return {
       // The ManimCommunity colors used to style tags
       colors: ["#81b29a", "#454866", "#e07a5f"],
+      versionClicked: false,
     };
   },
 };

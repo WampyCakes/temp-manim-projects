@@ -126,7 +126,7 @@
       </div>
     </div>
   </div>
-  <submit-video v-if="submissionForm"/>
+  <submit-video :showForm="submissionForm"/>
   <!-- <div id="carousel" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
       <div class="carousel-item active">
@@ -223,6 +223,9 @@ export default {
         this.submissionForm = true;
       }
     },
+    // updateForm(formData) {
+    //   this.SubmitVideo.$props.formData = formData;
+    // }
   //   captcha() {
   //     var self = this;
   //       RVerify.action(function(result){
@@ -239,6 +242,11 @@ export default {
   //       });
   //   }
   },
+  // computed: {
+  //   parseFormData() {
+  //     return this.formData
+  //   }
+  // }
 }
 </script>
 

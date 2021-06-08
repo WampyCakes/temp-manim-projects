@@ -7,7 +7,7 @@ on:
 
 jobs:
   add:
-    if: contains(github.event.issue.labels.*.name, 'video') && contains(github.event.issue.labels.*.name, 'submission approved')
+    if: contains(github.event.issue.labels.*.name, 'submission approved') #&& contains(github.event.issue.labels.*.name, 'video')
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
